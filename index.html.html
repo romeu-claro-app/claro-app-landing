@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claro-app.ch — Documentos suíços em português</title>
+  <meta name="description" content="A app que ajuda imigrantes portugueses na Suíça a entender documentos oficiais em alemão, francês e italiano.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #1D9E75;
+      --green-dark: #0F6E56;
+      --green-light: #E8F7F1;
+      --green-mid: #9FE1CB;
+      --text: #1A1A18;
+      --text-muted: #5A5955;
+      --text-hint: #A8A69F;
+      --bg: #FAFAF8;
+      --white: #ffffff;
+      --border: #E8E6DF;
+      --surface: #F2F0E9;
+    }
+    /* Forçar modo claro — landing page sempre clara */
+    html { color-scheme: light only; }
+    body { background: #FAFAF8 !important; color: #1A1A18 !important; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green); }
+    .nav-logo-ch { font-size: 14px; color: var(--green-dark); font-family: 'DM Sans', sans-serif; }
+    .nav-cta {
+      background: var(--green); color: white; border: none;
+      padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 500;
+      cursor: pointer; font-family: inherit; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(29,158,117,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-light); color: var(--green-dark);
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      margin-bottom: 24px; border: 1px solid var(--green-mid);
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero-title span { color: var(--green); }
+    .hero-sub {
+      font-size: 18px; color: var(--text-muted); line-height: 1.7;
+      margin-bottom: 40px; font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green); color: white; border: none;
+      padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; font-family: inherit; text-decoration: none;
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-ghost {
+      color: var(--text-muted); font-size: 14px; text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-ghost:hover { color: var(--green); }
+
+    /* App mockup */
+    .hero-mockup {
+      position: relative; display: flex; justify-content: center;
+    }
+    .mockup-phone {
+      width: 260px; background: var(--text); border-radius: 36px;
+      padding: 12px; box-shadow: 0 40px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .mockup-screen {
+      background: #1a1a18; border-radius: 26px; overflow: hidden;
+      aspect-ratio: 9/19.5;
+    }
+    .mockup-inner {
+      background: linear-gradient(160deg, #1D9E75 0%, #0F6E56 40%, #1a1a18 100%);
+      height: 100%; padding: 24px 16px; display: flex; flex-direction: column;
+    }
+    .mockup-logo {
+      display: flex; align-items: center; gap: 7px; margin-bottom: 24px;
+    }
+    .mockup-logo-circle {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: white; display: flex; align-items: center; justify-content: center;
+    }
+    .mockup-logo-inner { width: 18px; height: 18px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; }
+    .mockup-logo-dot { width: 8px; height: 8px; border-radius: 50%; background: white; }
+    .mockup-logo-text { color: white; font-size: 14px; font-weight: 600; }
+    .mockup-card {
+      background: rgba(255,255,255,0.12); border-radius: 14px;
+      padding: 14px; margin-bottom: 10px; backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .mockup-label { font-size: 9px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .mockup-text { font-size: 11px; color: white; line-height: 1.5; }
+    .mockup-tag {
+      display: inline-block; background: #E8F7F1; color: #0F6E56;
+      font-size: 9px; padding: 2px 8px; border-radius: 10px; font-weight: 500; margin-top: 6px;
+    }
+    .mockup-tag-warn {
+      background: #FAEEDA; color: #633806;
+    }
+    .floating-badge {
+      position: absolute; right: -30px; top: 40px;
+      background: white; border-radius: 12px; padding: 10px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      font-size: 12px; font-weight: 500; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .floating-badge2 {
+      position: absolute; left: -30px; bottom: 80px;
+      background: white; border-radius: 12px; padding: 10px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      font-size: 12px; font-weight: 500; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+      animation: float 3s ease-in-out infinite 1.5s;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--green-dark);
+      padding: 60px 48px;
+    }
+    .stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; color: white; margin-bottom: 6px;
+    }
+    .stat-label { font-size: 14px; color: rgba(255,255,255,0.6); }
+
+    /* ── FEATURES ── */
+    .features { padding: 100px 48px; }
+    .features-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px; font-weight: 600; color: var(--green);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 42px); line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub { font-size: 17px; color: var(--text-muted); line-height: 1.7; max-width: 560px; font-weight: 300; }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 60px;
+    }
+    .feature-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--green-mid));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .feature-card:hover::before { transform: scaleX(1); }
+    .feature-icon {
+      width: 48px; height: 48px; background: var(--green-light);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+    .feature-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .feature-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how { padding: 100px 48px; background: var(--surface); }
+    .how-inner { max-width: 1100px; margin: 0 auto; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
+    .step { text-align: center; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green); color: white;
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── PRICING ── */
+    .pricing { padding: 100px 48px; }
+    .pricing-inner { max-width: 1100px; margin: 0 auto; }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 60px; max-width: 700px; margin-left: auto; margin-right: auto;
+    }
+    .pricing-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px; text-align: center;
+    }
+    .pricing-card.featured {
+      background: var(--green); border-color: var(--green);
+      color: white;
+    }
+    .pricing-plan { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; opacity: 0.7; }
+    .pricing-price { font-family: 'Playfair Display', serif; font-size: 48px; margin-bottom: 4px; }
+    .pricing-period { font-size: 14px; opacity: 0.6; margin-bottom: 24px; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 28px; }
+    .pricing-features li { font-size: 14px; padding: 6px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .pricing-card.featured .pricing-features li { border-color: rgba(255,255,255,0.15); }
+    .pricing-btn {
+      width: 100%; padding: 13px; border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; font-family: inherit; border: none; transition: all 0.2s;
+    }
+    .pricing-btn-outline {
+      background: transparent; color: var(--green); border: 1.5px solid var(--green);
+    }
+    .pricing-btn-outline:hover { background: var(--green); color: white; }
+    .pricing-btn-white { background: white; color: var(--green); }
+    .pricing-btn-white:hover { background: var(--green-light); }
+
+    /* ── ABOUT ── */
+    .about { padding: 100px 48px; background: var(--surface); }
+    .about-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-photo {
+      width: 100%; aspect-ratio: 4/5; border-radius: 20px;
+      background: linear-gradient(135deg, var(--green-light), var(--green-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px; position: relative; overflow: hidden;
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; }
+    .about-tag {
+      position: absolute; bottom: 20px; left: 20px;
+      background: white; border-radius: 10px; padding: 10px 16px;
+      font-size: 12px; font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .about-name { font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 8px; }
+    .about-role { font-size: 14px; color: var(--green); font-weight: 500; margin-bottom: 20px; }
+    .about-text { font-size: 16px; color: var(--text-muted); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
+
+    /* ── APP STORE ── */
+    .appstore { padding: 100px 48px; }
+    .appstore-inner {
+      max-width: 700px; margin: 0 auto; text-align: center;
+    }
+    .appstore-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px); margin-bottom: 16px; }
+    .appstore-sub { font-size: 17px; color: var(--text-muted); line-height: 1.7; margin-bottom: 48px; font-weight: 300; }
+    .store-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+    .store-btn {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--text); color: white; border-radius: 12px;
+      padding: 14px 24px; text-decoration: none; transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .store-btn:hover { background: #2a2a28; transform: translateY(-2px); }
+    .store-btn-info { text-align: left; }
+    .store-btn-soon { font-size: 10px; opacity: 0.6; }
+    .store-btn-name { font-size: 16px; font-weight: 600; }
+    .store-btn.disabled { opacity: 0.5; cursor: default; }
+    .store-btn.disabled:hover { transform: none; }
+    .coming-soon-badge {
+      display: inline-block; background: var(--green-light); color: var(--green-dark);
+      font-size: 12px; font-weight: 500; padding: 6px 16px; border-radius: 20px;
+      border: 1px solid var(--green-mid); margin-bottom: 32px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-dark); color: rgba(255,255,255,0.7);
+      padding: 48px; text-align: center; font-size: 13px;
+    }
+    footer a { color: var(--green-mid); text-decoration: none; }
+    .footer-logo {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      color: var(--green); margin-bottom: 16px;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-mockup { display: none; }
+      .stats { padding: 40px 20px; }
+      .stats-inner { grid-template-columns: 1fr; gap: 24px; }
+      .features, .how, .pricing, .about, .appstore { padding: 60px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 32px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-photo { aspect-ratio: 1; max-width: 280px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#1D9E75"/><circle cx="18" cy="18" r="11" fill="#E8F7F1"/><circle cx="18" cy="18" r="5" fill="#1D9E75"/></svg>
+    <span class="nav-logo-text">claro-app</span><span class="nav-logo-ch">.ch</span>
+  </a>
+  <a href="#download" class="nav-cta">Em breve</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="fade-in">
+      <div class="hero-badge">🇵🇹 Feito para portugueses na Suíça</div>
+      <h1 class="hero-title">
+        Documentos suíços,<br>
+        <span>explicados em português.</span>
+      </h1>
+      <p class="hero-sub">
+        Recebeste uma carta do seguro, dos impostos ou da régie e não sabes o que fazer? O Claro-app analisa o documento e diz-te exatamente o que tens de fazer — em português simples.
+      </p>
+      <div class="hero-actions">
+        <a href="#download" class="btn-primary">Ser avisado do lançamento</a>
+        <a href="#como-funciona" class="btn-ghost">Como funciona →</a>
+      </div>
+    </div>
+    <div class="hero-mockup fade-in" style="transition-delay:0.2s">
+      <div class="mockup-phone">
+        <div class="mockup-screen">
+          <div class="mockup-inner">
+            <div class="mockup-logo">
+              <div class="mockup-logo-circle"><div class="mockup-logo-inner"><div class="mockup-logo-dot"></div></div></div>
+              <span class="mockup-logo-text">claro-app</span>
+            </div>
+            <div class="mockup-card">
+              <div class="mockup-label">Documento analisado</div>
+              <div class="mockup-text">Krankenkasse Helsana AG — Fatura de abril 2025. Total: CHF 342.80</div>
+              <span class="mockup-tag tag-warn">⚠ Prazo: 27 abril</span>
+            </div>
+            <div class="mockup-card">
+              <div class="mockup-label">O que tens de fazer</div>
+              <div class="mockup-text">Pagar CHF 342.80 até 27 de abril. Em caso de atraso, serão cobrados juros.</div>
+              <span class="mockup-tag">✓ Informativo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="floating-badge">
+        <span style="font-size:18px;">✅</span>
+        <div><div style="font-size:10px;color:#888;">Analisado em</div><div style="font-weight:600;">2 segundos</div></div>
+      </div>
+      <div class="floating-badge2">
+        <span style="font-size:18px;">🇵🇹</span>
+        <div><div style="font-size:10px;color:#888;">Resposta em</div><div style="font-weight:600;">Português</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="fade-in">
+      <div class="stat-num">250.000+</div>
+      <div class="stat-label">Portugueses residentes na Suíça</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.1s">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Idiomas analisados (DE, FR, IT)</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.2s">
+      <div class="stat-num">2s</div>
+      <div class="stat-label">Tempo médio de análise</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="funcionalidades">
+  <div class="features-inner">
+    <div class="fade-in">
+      <div class="section-label">O que o Claro-app faz por ti</div>
+      <h2 class="section-title">Não é só uma app.<br>É o teu companheiro<br>de vida na Suíça.</h2>
+      <p class="section-sub">Imagina ter sempre alguém do teu lado que percebe como este país funciona — que te explica, te alerta, te aconselha e te acompanha em cada fase da tua vida aqui.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in" style="transition-delay:0.1s">
+        <div class="feature-icon">📄</div>
+        <div class="feature-title">Percebe qualquer documento</div>
+        <div class="feature-desc">Fotografa ou carrega qualquer documento oficial em alemão, francês ou italiano. Em segundos tens um resumo claro, em português, com o que tens de fazer e quando.</div>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.2s">
+        <div class="feature-icon">🧭</div>
+        <div class="feature-title">Nunca mais te sintas perdido</div>
+        <div class="feature-desc">Seguros, impostos, renda, trabalho — a Suíça tem regras para tudo. O Claro-app ajuda-te a navegar o sistema com confiança, passo a passo, sem surpresas.</div>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.3s">
+        <div class="feature-icon">📖</div>
+        <div class="feature-title">Um guia completo de vida</div>
+        <div class="feature-desc">Acesso ao Manual do Emigrante — 43 páginas sobre como viver, trabalhar e prosperar na Suíça — e ao Budget Mensal criado especificamente para a realidade suíça.</div>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay:0.4s">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-title">Um conselheiro sempre disponível</div>
+        <div class="feature-desc">Para as situações mais complexas, tens acesso direto a um consultor especializado em emigrantes portugueses — com marcação direta pela app, sem complicações.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="como-funciona">
+  <div class="how-inner">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-label">Como funciona</div>
+      <h2 class="section-title">Em 3 passos simples</h2>
+    </div>
+    <div class="steps">
+      <div class="step fade-in" style="transition-delay:0.1s">
+        <div class="step-num">1</div>
+        <div class="step-title">Fotografa ou carrega</div>
+        <div class="step-desc">Tira uma foto ao documento, carrega um PDF ou copia o texto. A app aceita qualquer formato.</div>
+      </div>
+      <div class="step fade-in" style="transition-delay:0.2s">
+        <div class="step-num">2</div>
+        <div class="step-title">A IA analisa</div>
+        <div class="step-desc">Em segundos, a nossa inteligência artificial lê, traduz e interpreta o documento na íntegra.</div>
+      </div>
+      <div class="step fade-in" style="transition-delay:0.3s">
+        <div class="step-num">3</div>
+        <div class="step-title">Sabes o que fazer</div>
+        <div class="step-desc">Recebes um resumo claro, a ação necessária e o prazo para agir — tudo em português.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="precos">
+  <div class="pricing-inner">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-label">Planos</div>
+      <h2 class="section-title">Simples e transparente</h2>
+      <p class="section-sub" style="margin:0 auto 0;">Começa grátis. Sem cartão de crédito.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in" style="transition-delay:0.1s">
+        <div class="pricing-plan">Grátis</div>
+        <div class="pricing-price">CHF 0</div>
+        <div class="pricing-period">para sempre</div>
+        <ul class="pricing-features">
+          <li>✓ 1 documento grátis</li>
+          <li>✓ Análise completa com IA</li>
+          <li>✓ Resumo em português</li>
+          <li style="opacity:0.4;">— Documentos ilimitados</li>
+          <li style="opacity:0.4;">— Manual do Emigrante</li>
+          <li style="opacity:0.4;">— Budget Mensal</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-outline">Começar grátis</button>
+      </div>
+      <div class="pricing-card featured fade-in" style="transition-delay:0.2s">
+        <div class="pricing-plan">Claro-app+</div>
+        <div class="pricing-price">CHF 14.90</div>
+        <div class="pricing-period">por mês · ou CHF 144/ano</div>
+        <ul class="pricing-features">
+          <li>✓ Documentos ilimitados</li>
+          <li>✓ Análise completa com IA</li>
+          <li>✓ Histórico de documentos</li>
+          <li>✓ Marcação de consulta</li>
+          <li>✓ Manual do Emigrante (PDF)</li>
+          <li>✓ Budget Mensal (Excel)</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-white">Começar com Claro-app+</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="about-inner">
+    <div class="about-photo fade-in">
+      <!-- Substituir pelo src da tua foto: <img src="foto.jpg" alt="Romeu"> -->
+      <span>👤</span>
+      <div class="about-tag">🇵🇹 Português na Suíça desde 2016</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.2s">
+      <div class="section-label">Quem está por trás</div>
+      <div class="about-name">Romeu Martins</div>
+      <div class="about-role">Consultor de Seguros e Finanças · GIO Groupe · Montreux</div>
+      <p class="about-text">
+        Cheguei à Suíça em 2016 e, como muitos de vós, cheio de expectativas e com muito para aprender. Trabalhei em vários setores de atividade, fui independente, ajudei empresas e privados, cometi erros e aprendi com eles. Com o tempo, fui percebendo como este país funciona — as regras, os prazos, os sistemas, as pessoas.
+      </p>
+      <p class="about-text">
+        O Claro-app nasceu dessa experiência. Não de um livro, mas de anos a viver, a trabalhar e a navegar a Suíça.
+      </p>
+      <p class="about-text">
+        A minha missão pessoal com o Claro-app? Que vivas os melhores anos da tua vida como emigrante. Que chegues mais longe, mais rápido e com menos surpresas do que eu.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- APP STORE / DOWNLOAD -->
+<section class="appstore" id="download">
+  <div class="appstore-inner">
+    <div class="fade-in">
+      <div class="coming-soon-badge">🚀 A chegar em breve</div>
+      <h2 class="appstore-title">Em breve na App Store<br>e no Google Play</h2>
+      <p class="appstore-sub">
+        Estamos a preparar o lançamento. Deixa o teu email e és o primeiro a saber quando a app estiver disponível.
+      </p>
+
+      <!-- Ícones das lojas (decorativos) -->
+      <div class="store-buttons" style="opacity:0.4;pointer-events:none;margin-bottom:36px;">
+        <div class="store-btn" style="cursor:default;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="store-btn-info">
+            <div class="store-btn-soon">Em breve na</div>
+            <div class="store-btn-name">App Store</div>
+          </div>
+        </div>
+        <div class="store-btn" style="cursor:default;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.37.6 1.23 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/></svg>
+          <div class="store-btn-info">
+            <div class="store-btn-soon">Em breve no</div>
+            <div class="store-btn-name">Google Play</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário de email -->
+      <div style="background:var(--surface);border-radius:16px;padding:32px;margin-bottom:32px;border:1px solid var(--border);">
+        <p style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Avisa-me quando lançar</p>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">Sem spam. Só um email quando a app estiver disponível.</p>
+        <div id="emailFormWrap" style="display:flex;gap:10px;flex-wrap:wrap;">
+          <input id="notifyEmail" type="email" placeholder="O teu email" style="flex:1;min-width:200px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;background:white;color:var(--text);outline:none;">
+          <button onclick="submitNotify()" style="background:var(--green);color:white;border:none;border-radius:10px;padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='#0F6E56'" onmouseout="this.style.background='#1D9E75'">Quero ser avisado</button>
+        </div>
+        <div id="notifySuccess" style="display:none;background:var(--green-light);border:1px solid var(--green-mid);border-radius:10px;padding:14px;font-size:14px;color:var(--green-dark);font-weight:500;">✅ Perfeito! Avisamos-te assim que a app estiver disponível.</div>
+      </div>
+
+      <div style="border-top:1px solid var(--border);padding-top:28px;">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Já disponível como app web — funciona no teu telemóvel agora mesmo.</p>
+        <a href="https://claro-app2.vercel.app" class="btn-primary" style="font-size:14px;">Experimentar agora →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">claro-app.ch</div>
+  <p style="margin-bottom:12px;">Feito com ❤️ para a comunidade portuguesa na Suíça</p>
+  <p><a href="mailto:suporte@claro-app.ch">suporte@claro-app.ch</a> · <a href="#">Política de Privacidade</a> · <a href="#">Termos de Serviço</a></p>
+  <p style="margin-top:16px;font-size:11px;opacity:0.4;">© 2025 Claro-app.ch · Todos os direitos reservados</p>
+</footer>
+
+<script>
+// Formulário de notificação
+function submitNotify() {
+  var email = document.getElementById('notifyEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    alert('Por favor insere um email válido.');
+    return;
+  }
+  // Guardar no localStorage por agora
+  var emails = JSON.parse(localStorage.getItem('notify_emails') || '[]');
+  if (!emails.includes(email)) emails.push(email);
+  localStorage.setItem('notify_emails', JSON.stringify(emails));
+  
+  document.getElementById('emailFormWrap').style.display = 'none';
+  document.getElementById('notifySuccess').style.display = 'block';
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
