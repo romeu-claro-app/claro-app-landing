@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancelar subscrição de emails — Claro-app.ch</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #FAFAF8; color: #1A1A18; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .container { max-width: 480px; width: 100%; text-align: center; }
+    .logo { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 40px; text-decoration: none; }
+    .logo-text { font-size: 20px; font-weight: 600; color: #1D9E75; }
+    .card { background: white; border-radius: 16px; padding: 40px 32px; border: 1px solid #E8E6DF; }
+    .icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 28px; }
+    .icon-success { background: #E8F7F1; }
+    .icon-error { background: #FCEBEB; }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 12px; color: #1A1A18; }
+    p { font-size: 15px; color: #5A5955; line-height: 1.7; margin-bottom: 24px; font-weight: 300; }
+    .btn { display: inline-block; background: #1D9E75; color: white; text-decoration: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 500; transition: background 0.2s; }
+    .btn:hover { background: #0F6E56; }
+    .btn-ghost { display: inline-block; color: #1D9E75; text-decoration: none; font-size: 14px; margin-top: 16px; }
+    .divider { height: 1px; background: #E8E6DF; margin: 24px 0; }
+    .note { font-size: 13px; color: #A8A69F; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="logo">
+    <svg width="32" height="32" viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#1D9E75"/><circle cx="18" cy="18" r="11" fill="#E8F7F1"/><circle cx="18" cy="18" r="5" fill="#1D9E75"/></svg>
+    <span class="logo-text">claro-app.ch</span>
+  </a>
+
+  <div class="card" id="successCard" style="display:none;">
+    <div class="icon icon-success">✅</div>
+    <h1>Subscrição cancelada</h1>
+    <p>Removemos o teu endereço de email da nossa lista de comunicações. Não receberás mais emails de marketing da nossa parte.</p>
+    <p class="note">A tua conta e o teu acesso à app continuam ativos. Podes reativar as comunicações a qualquer momento nas definições do teu perfil.</p>
+    <div class="divider"></div>
+    <a href="https://claro-app2.vercel.app" class="btn">Voltar à app →</a>
+    <br>
+    <a href="/" class="btn-ghost">Voltar ao início</a>
+  </div>
+
+  <div class="card" id="errorCard" style="display:none;">
+    <div class="icon icon-error">❌</div>
+    <h1>Algo correu mal</h1>
+    <p>Não conseguimos processar o teu pedido. Por favor tenta novamente ou contacta-nos diretamente.</p>
+    <div class="divider"></div>
+    <a href="mailto:suporte@claro-app.ch" class="btn">Contactar suporte</a>
+    <br>
+    <a href="/" class="btn-ghost">Voltar ao início</a>
+  </div>
+
+  <div class="card" id="loadingCard">
+    <div class="icon icon-success" style="background:#F5F3EC;">⏳</div>
+    <h1>A processar...</h1>
+    <p>Estamos a remover o teu endereço de email da lista de comunicações.</p>
+  </div>
+</div>
+
+<script>
+  var params = new URLSearchParams(window.location.search);
+  document.getElementById('loadingCard').style.display = 'none';
+  if (params.get('success') === 'true') {
+    document.getElementById('successCard').style.display = 'block';
+  } else if (params.get('error') === 'true') {
+    document.getElementById('errorCard').style.display = 'block';
+  } else {
+    document.getElementById('loadingCard').style.display = 'block';
+  }
+</script>
+</body>
+</html>
