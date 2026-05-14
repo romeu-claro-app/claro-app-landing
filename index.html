@@ -341,6 +341,31 @@
       .pricing-grid { grid-template-columns: 1fr; }
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
       .about-photo { aspect-ratio: 1; max-width: 280px; margin: 0 auto; }
+      .section-grid { display: block !important; }
+      .section-grid > div { margin-bottom: 32px; }
+      /* Section padding mobile */
+      section { padding-left: 20px !important; padding-right: 20px !important; }
+      /* Comparison table mobile - hide middle column, show only key+claro */
+      .compare-table th:nth-child(2), .compare-table td:nth-child(2) { display: none; }
+      table { width: 100% !important; }
+      table th, table td { padding: 10px 8px !important; font-size: 13px !important; }
+      .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+      /* Secções com grid inline (Manual, Budget, Consultor) */
+      section > div > div[style*="grid-template-columns:1fr 1fr"],
+      section > div > div[style*="grid-template-columns: 1fr 1fr"] {
+        display: block !important;
+      }
+      section > div > div[style*="grid-template-columns:1fr 1fr"] > div,
+      section > div > div[style*="grid-template-columns: 1fr 1fr"] > div {
+        order: unset !important;
+        margin-bottom: 32px;
+      }
+      /* Tabela comparação — coluna Claro-app+ visível, resto simplificado */
+      table { font-size: 13px !important; }
+      table td, table th { padding: 10px 10px !important; }
+      /* Secções com padding grande */
+      section[style*="padding:100px 48px"],
+      section[style*="padding: 100px 48px"] { padding: 60px 20px !important; }
     }
   </style>
 </head>
@@ -588,7 +613,7 @@
 <!-- MANUAL -->
 <section style="padding:100px 48px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="section-grid">
       <div class="fade-in">
         <div class="section-label">Incluído no Claro-app+</div>
         <h2 class="section-title" style="font-size:clamp(24px,3.5vw,38px);">"Os Melhores Anos da Minha Vida como Emigrante"</h2>
@@ -635,7 +660,7 @@
 <!-- BUDGET -->
 <section style="padding:100px 48px;background:var(--surface);">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="section-grid">
       <div class="fade-in" style="order:2;">
         <div class="section-label">Incluído no Claro-app+</div>
         <h2 class="section-title">Budget Mensal Suíça</h2>
@@ -695,7 +720,7 @@
 <!-- CONSULTOR -->
 <section style="padding:100px 48px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="section-grid">
       <div class="fade-in">
         <div class="section-label">Incluído no Claro-app+</div>
         <h2 class="section-title" style="font-size:clamp(24px,3.5vw,38px);">Quando a carta é importante de mais para arriscar</h2>
@@ -753,7 +778,7 @@
         <p style="font-size:16px;color:var(--text-muted);line-height:1.8;max-width:640px;margin:0 auto;font-weight:300;">A maioria dos consultores cobra pelo tempo ou vende-te algo para justificar a visita. Com o Claro-app+, isso não existe.</p>
       </div>
       <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:15px;">
+        <table class="compare-table" style="width:100%;border-collapse:collapse;font-size:15px;">
           <thead>
             <tr>
               <th style="padding:14px 20px;text-align:left;color:var(--text-muted);font-weight:500;border-bottom:2px solid var(--border);width:30%;"></th>
