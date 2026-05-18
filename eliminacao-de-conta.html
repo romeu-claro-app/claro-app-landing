@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliminação de Conta — Claro-app.ch</title>
+  <meta name="description" content="Pedido de eliminação de conta e dados pessoais do Claro-app.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #1D9E75;
+      --green-dark: #0F6E56;
+      --green-light: #E8F7F1;
+      --green-mid: #9FE1CB;
+      --text: #1A1A18;
+      --text-muted: #5A5955;
+      --text-hint: #A8A69F;
+      --bg: #FAFAF8;
+      --white: #ffffff;
+      --border: #E8E6DF;
+      --surface: #F2F0E9;
+      --red: #E53935;
+      --red-light: #FFEBEE;
+    }
+    html { color-scheme: light only; scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green); }
+    .nav-logo-ch { font-size: 14px; color: var(--green-dark); font-family: 'DM Sans', sans-serif; }
+    .nav-back {
+      color: var(--text-muted); font-size: 14px; text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--green); }
+
+    /* MAIN */
+    main {
+      min-height: 100vh;
+      padding: 120px 24px 80px;
+      display: flex; align-items: flex-start; justify-content: center;
+    }
+    .container {
+      max-width: 640px; width: 100%;
+    }
+
+    /* HEADER */
+    .page-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red-light); color: var(--red);
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+      margin-bottom: 24px; border: 1px solid rgba(229,57,53,0.2);
+    }
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .page-sub {
+      font-size: 16px; color: var(--text-muted); line-height: 1.7;
+      margin-bottom: 48px; font-weight: 300;
+    }
+
+    /* INFO BOXES */
+    .info-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .info-box h3 {
+      font-size: 15px; font-weight: 600; color: var(--text);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .info-box ul {
+      list-style: none; padding: 0;
+    }
+    .info-box ul li {
+      font-size: 14px; color: var(--text-muted); padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 8px;
+      line-height: 1.5;
+    }
+    .info-box ul li:last-child { border-bottom: none; }
+    .info-box ul li::before { content: '•'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    .warning-box {
+      background: var(--red-light);
+      border: 1px solid rgba(229,57,53,0.2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: #b71c1c;
+      line-height: 1.6;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .warning-box .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    /* FORM */
+    .form-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+    .form-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; color: var(--text);
+      margin-bottom: 8px;
+    }
+    .form-card .form-sub {
+      font-size: 14px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 500; color: var(--text);
+      margin-bottom: 8px;
+    }
+    .form-group label span { color: var(--red); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: inherit; font-size: 14px; color: var(--text);
+      background: var(--bg);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--green);
+      background: white;
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select { cursor: pointer; }
+
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+    .radio-option {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border); border-radius: 8px;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      background: var(--bg);
+    }
+    .radio-option:hover { border-color: var(--green-mid); background: var(--green-light); }
+    .radio-option input[type="radio"] { margin-top: 2px; accent-color: var(--green); flex-shrink: 0; }
+    .radio-option-text { font-size: 14px; }
+    .radio-option-text strong { display: block; color: var(--text); margin-bottom: 2px; }
+    .radio-option-text span { color: var(--text-muted); font-size: 12px; line-height: 1.5; }
+
+    .btn-submit {
+      width: 100%; padding: 14px;
+      background: var(--red); color: white; border: none;
+      border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: #c62828; transform: translateY(-1px); }
+    .btn-submit:disabled { background: var(--text-hint); cursor: not-allowed; transform: none; }
+
+    /* SUCCESS */
+    .success-card {
+      display: none;
+      background: var(--green-light);
+      border: 1px solid var(--green-mid);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .success-card .icon { font-size: 48px; margin-bottom: 16px; }
+    .success-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; color: var(--green-dark); margin-bottom: 12px;
+    }
+    .success-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--text-hint);
+    }
+    footer a { color: var(--green); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      main { padding: 100px 16px 60px; }
+      .form-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-text">claro</span>
+    <span class="nav-logo-ch">.ch</span>
+  </a>
+  <a href="/" class="nav-back">
+    ← Voltar ao início
+  </a>
+</nav>
+
+<main>
+  <div class="container">
+
+    <div class="page-badge">⚙️ Gestão de conta</div>
+    <h1 class="page-title">Eliminação de conta<br>e dados pessoais</h1>
+    <p class="page-sub">
+      Tens o direito de pedir a eliminação da tua conta e/ou dos teus dados pessoais do Claro-app a qualquer momento. Preenche o formulário abaixo e responderemos no prazo de 30 dias.
+    </p>
+
+    <div class="info-box">
+      <h3>📋 O que será eliminado</h3>
+      <ul>
+        <li>A tua conta e credenciais de acesso</li>
+        <li>Histórico de análises e documentos submetidos</li>
+        <li>Dados de perfil (email, preferências)</li>
+        <li>Dados de faturação e histórico de subscrições</li>
+      </ul>
+    </div>
+
+    <div class="warning-box">
+      <span class="icon">⚠️</span>
+      <span>A eliminação da conta é <strong>permanente e irreversível</strong>. Perderás acesso a todas as análises guardadas e ao plano ativo. Se tiveres uma subscrição paga ativa, esta será cancelada sem reembolso proporcional.</span>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card" id="formCard">
+      <h2>Pedir eliminação</h2>
+      <p class="form-sub">Preenche os campos abaixo. Verificaremos a tua identidade antes de proceder.</p>
+
+      <div class="form-group">
+        <label>Email da conta <span>*</span></label>
+        <input type="email" id="emailInput" placeholder="o-teu-email@exemplo.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>O que pretendes eliminar? <span>*</span></label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="deleteType" value="conta_completa">
+            <div class="radio-option-text">
+              <strong>Conta completa + todos os dados</strong>
+              <span>Remove permanentemente a tua conta, histórico e todos os dados associados.</span>
+            </div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="deleteType" value="apenas_dados">
+            <div class="radio-option-text">
+              <strong>Apenas dados pessoais (manter conta)</strong>
+              <span>Remove o histórico de análises e dados pessoais, mantendo o acesso à conta.</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Motivo (opcional)</label>
+        <textarea id="reasonInput" placeholder="Podes partilhar o motivo do pedido, se quiseres..."></textarea>
+      </div>
+
+      <button class="btn-submit" id="submitBtn" onclick="submitRequest()">
+        Enviar pedido de eliminação
+      </button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-card" id="successCard">
+      <div class="icon">✅</div>
+      <h3>Pedido recebido</h3>
+      <p>
+        Recebemos o teu pedido de eliminação. Responderemos para o email indicado no prazo de <strong>30 dias</strong> com a confirmação do processo.<br><br>
+        Se tiveres dúvidas, contacta-nos em <a href="mailto:suporte@claro-app.ch">suporte@claro-app.ch</a>
+      </p>
+    </div>
+
+    <div style="font-size:13px;color:var(--text-hint);line-height:1.7;text-align:center;">
+      Tens também a possibilidade de eliminar a tua conta diretamente nas definições da app.<br>
+      Dúvidas? <a href="mailto:suporte@claro-app.ch" style="color:var(--green);text-decoration:none;">suporte@claro-app.ch</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p style="margin-bottom:8px;"><a href="/">claro-app.ch</a> · <a href="/privacidade.html">Política de Privacidade</a> · <a href="/termos.html">Termos de Serviço</a></p>
+  <p>© 2025 Claro-app.ch · Todos os direitos reservados</p>
+</footer>
+
+<script>
+function submitRequest() {
+  const email = document.getElementById('emailInput').value.trim();
+  const deleteType = document.querySelector('input[name="deleteType"]:checked');
+  const reason = document.getElementById('reasonInput').value.trim();
+
+  if (!email || !email.includes('@')) {
+    alert('Por favor insere um email válido.');
+    return;
+  }
+  if (!deleteType) {
+    alert('Por favor selecciona o que pretendes eliminar.');
+    return;
+  }
+
+  const typeLabel = deleteType.value === 'conta_completa'
+    ? 'Conta completa + todos os dados'
+    : 'Apenas dados pessoais (manter conta)';
+
+  const subject = encodeURIComponent('Pedido de eliminação de conta — Claro-app');
+  const body = encodeURIComponent(
+    'Email da conta: ' + email + '\n' +
+    'Tipo de pedido: ' + typeLabel + '\n' +
+    (reason ? 'Motivo: ' + reason + '\n' : '') +
+    '\nData: ' + new Date().toLocaleString('pt-PT')
+  );
+
+  window.location.href = 'mailto:suporte@claro-app.ch?subject=' + subject + '&body=' + body;
+
+  document.getElementById('formCard').style.display = 'none';
+  document.getElementById('successCard').style.display = 'block';
+}
+</script>
+</body>
+</html>
