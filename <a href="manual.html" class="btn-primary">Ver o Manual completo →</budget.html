@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Mensal Suíça — Claro-app+</title>
+  <meta name="description" content="O ficheiro Excel criado especificamente para a realidade suíça. Todas as categorias de despesa de um emigrante, em CHF, pronto a usar. Incluído no Claro-app+.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light only; scroll-behavior: smooth; }
+    :root {
+      --green: #1D9E75; --green-dark: #0F6E56; --green-light: #E8F7F1;
+      --green-mid: #9FE1CB; --text: #1A1A18; --text-muted: #5A5955;
+      --text-hint: #A8A69F; --bg: #FAFAF8; --border: #E8E6DF; --surface: #F2F0E9;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 48px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(250,250,248,0.93); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--green); }
+    .nav-logo-ch { font-size: 14px; color: var(--green-dark); }
+    .nav-cta { background: var(--green); color: white; border: none; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--green-dark); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0a4a38 0%, #0F6E56 45%, #1D9E75 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 20%, rgba(159,225,203,0.1) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 800px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); color: white; padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; margin-bottom: 28px; border: 1px solid rgba(255,255,255,0.2); }
+    .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--green-mid); margin-bottom: 16px; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 66px); line-height: 1.08; color: white; margin-bottom: 10px; }
+    .hero-title em { font-style: italic; color: var(--green-mid); }
+    .hero-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(16px, 2.5vw, 22px); color: rgba(255,255,255,0.6); margin-bottom: 28px; font-weight: 400; }
+    .hero-desc { font-size: 18px; color: rgba(255,255,255,0.82); line-height: 1.75; margin-bottom: 44px; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-included { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 22px; font-size: 15px; color: white; margin-bottom: 36px; }
+    .hero-included strong { color: var(--green-mid); }
+    .btn-hero { display: inline-block; background: white; color: var(--green-dark); padding: 17px 52px; border-radius: 12px; font-size: 17px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+    .btn-hero:hover { transform: translateY(-2px); box-shadow: 0 12px 44px rgba(0,0,0,0.3); }
+    .hero-scroll { margin-top: 48px; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* SECTIONS */
+    section { padding: 90px 24px; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+    h2.section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px); line-height: 1.2; color: var(--text); margin-bottom: 18px; }
+    h2.section-title span { color: var(--green); }
+    .section-sub { font-size: 17px; color: var(--text-muted); line-height: 1.75; margin-bottom: 48px; font-weight: 300; }
+
+    /* PAIN */
+    .pain { background: var(--surface); }
+    .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+    .pain-card { background: white; border-radius: 14px; padding: 24px; border: 1px solid var(--border); border-left: 3px solid #e05252; }
+    .pain-icon { font-size: 28px; margin-bottom: 12px; }
+    .pain-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .pain-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* INTRO BUDGET */
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .intro-visual {
+      background: white; border-radius: 20px; padding: 32px;
+      border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+    }
+    .intro-visual-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .intro-visual-header span { font-size: 32px; }
+    .intro-visual-header h3 { font-size: 16px; font-weight: 600; color: var(--text); }
+    .budget-row { display: flex; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .budget-row:last-child { border-bottom: none; }
+    .budget-row .label { color: var(--text-muted); }
+    .budget-row .val { font-weight: 600; color: var(--text); }
+    .budget-row.total { background: var(--green-light); margin: 0 -8px; padding: 12px 8px; border-radius: 8px; border: none; }
+    .budget-row.total .label { color: var(--green-dark); font-weight: 600; }
+    .budget-row.total .val { color: var(--green); font-size: 15px; }
+    .intro-text h3 { font-family: 'Playfair Display', serif; font-size: 32px; line-height: 1.25; color: var(--text); margin-bottom: 20px; }
+    .intro-text h3 em { font-style: italic; color: var(--green); }
+    .intro-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
+    .intro-quote { background: var(--green-light); border-left: 3px solid var(--green); border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 24px 0; font-style: italic; font-size: 15px; color: var(--green-dark); line-height: 1.7; }
+
+    /* CATEGORIES */
+    .categories { background: var(--surface); }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+    .cat-card { background: white; border-radius: 14px; padding: 22px; border: 1px solid var(--border); transition: border-color 0.2s, transform 0.2s; }
+    .cat-card:hover { border-color: var(--green-mid); transform: translateY(-2px); }
+    .cat-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .cat-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .cat-card h3 { font-size: 14px; font-weight: 600; color: var(--text); }
+    .cat-items { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cat-item { background: var(--surface); color: var(--text-muted); font-size: 11px; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border); }
+
+    /* HOW IT WORKS */
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .how-steps { display: grid; gap: 24px; }
+    .how-step { display: flex; gap: 16px; align-items: flex-start; }
+    .how-step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: white; font-family: 'Playfair Display', serif; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .how-step-text h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .how-step-text p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .how-visual { background: white; border-radius: 20px; padding: 28px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .how-visual h4 { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+    .summary-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row span:first-child { color: var(--text-muted); }
+    .summary-row span:last-child { font-weight: 600; }
+    .summary-row.green span { color: var(--green); }
+    .summary-row.red span { color: #e05252; }
+
+    /* CTA MID */
+    .cta-mid { background: var(--green-dark); padding: 80px 24px; text-align: center; }
+    .cta-mid h2 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 42px); color: white; margin-bottom: 14px; line-height: 1.2; }
+    .cta-mid p { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 36px; font-weight: 300; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-cta { display: inline-block; background: white; color: var(--green-dark); padding: 17px 52px; border-radius: 12px; font-size: 17px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+    .btn-cta:hover { transform: translateY(-2px); }
+    .cta-mid-sub { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* FOR WHO */
+    .forwho-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .forwho-card { background: var(--surface); border-radius: 16px; padding: 28px; border: 1px solid var(--border); transition: border-color 0.2s; }
+    .forwho-card:hover { border-color: var(--green-mid); }
+    .forwho-card .emoji { font-size: 32px; margin-bottom: 14px; }
+    .forwho-card h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .forwho-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* INCLUDED */
+    .included { background: var(--surface); }
+    .included-card { background: white; border-radius: 20px; padding: 36px; border: 2px solid var(--green); margin-bottom: 20px; }
+    .included-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .tag-plus { background: var(--green-light); color: var(--green-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+    .included-card p { font-size: 15px; color: var(--text-muted); line-height: 1.65; margin: 10px 0 22px; }
+    .feat-list { list-style: none; display: grid; gap: 10px; }
+    .feat-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.5; }
+    .feat-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* CTA FINAL */
+    .cta-final { background: linear-gradient(135deg, #0a4a38 0%, #1D9E75 100%); text-align: center; padding: 100px 24px; }
+    .cta-final h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 48px); color: white; margin-bottom: 14px; line-height: 1.2; }
+    .cta-final p { font-size: 18px; color: rgba(255,255,255,0.72); margin-bottom: 40px; font-weight: 300; }
+    .btn-cta-final { display: inline-block; background: white; color: var(--green-dark); padding: 18px 56px; border-radius: 12px; font-size: 18px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+    .btn-cta-final:hover { transform: translateY(-2px); }
+    .cta-final-sub { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,0.42); }
+
+    /* FOOTER */
+    footer { background: var(--green-dark); color: rgba(255,255,255,0.5); text-align: center; padding: 40px 24px; font-size: 13px; line-height: 2; }
+    footer a { color: var(--green-mid); text-decoration: none; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin-bottom: 12px; }
+
+    /* FADE */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      section { padding: 60px 18px; }
+      .intro-grid, .how-grid, .forwho-grid { grid-template-columns: 1fr; gap: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#1D9E75"/><circle cx="18" cy="18" r="11" fill="#E8F7F1"/><circle cx="18" cy="18" r="5" fill="#1D9E75"/></svg>
+    <span class="nav-logo-text">claro-app</span><span class="nav-logo-ch">.ch</span>
+  </a>
+  <a href="index.html#download" class="nav-cta">Instala já</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🇵🇹 Para portugueses na Suíça 🇨🇭</div>
+    <div class="hero-eyebrow">Budget Mensal Suíça</div>
+    <h1 class="hero-title">
+      O teu dinheiro,<br>
+      <em>finalmente organizado.</em>
+    </h1>
+    <p class="hero-subtitle">O ficheiro Excel criado especificamente para a realidade suíça</p>
+    <p class="hero-desc">
+      Todas as categorias de despesa de um emigrante na Suíça, em francos suíços, com cálculos automáticos. Pronto a usar no primeiro dia — sem ter de construir nada do zero.
+    </p>
+    <div class="hero-included">
+      📊 Incluído no <strong>&nbsp;Claro-app+</strong>
+    </div>
+    <br><br>
+    <a href="index.html#download" class="btn-hero">Quero aceder ao Budget →</a>
+    <p class="hero-scroll">↓ Continua a ler</p>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="section-inner">
+    <div class="fade-in">
+      <div class="section-label">O problema</div>
+      <h2 class="section-title">Ganhar bem na Suíça<br><span>não chega. É preciso saber gerir.</span></h2>
+      <p class="section-sub">O custo de vida suíço surpreende quem não está preparado. Muitos emigrantes ganham bem — e chegam ao fim do mês sem perceber para onde foi o dinheiro.</p>
+    </div>
+    <div class="pain-grid fade-in">
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <h3>Não sabes para onde vai o dinheiro</h3>
+        <p>O salário chega, as despesas saem — mas no fim do mês não sabes exatamente o que gastaste nem onde podes poupar.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📅</div>
+        <h3>Despesas anuais que apanham de surpresa</h3>
+        <p>SERAFE, seguros anuais, franquia médica, impostos — chegam em alturas específicas e causam choque financeiro por não estares preparado.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🏦</div>
+        <h3>Poupança que nunca acontece</h3>
+        <p>Sem um plano claro para poupar, o dinheiro que "sobra" acaba por ser gasto sem destino — e a reforma ou os projetos futuros ficam para depois.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📊</div>
+        <h3>Templates genéricos que não funcionam</h3>
+        <p>Os budgets normais não têm LAMal, RC Ménage, LPP, SERAFE, vinheta de autoestrada ou franquia médica. Tens de construir tudo do zero.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🇨🇭</div>
+        <h3>Custos específicos que não conheces</h3>
+        <p>Sacos de lixo obrigatórios, taxas comunais, taxa de rádio e TV, imposto sobre veículos — despesas que os emigrantes recentes não antecipam.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">😓</div>
+        <h3>Stress financeiro desnecessário</h3>
+        <p>Sem visibilidade sobre o teu dinheiro, cada fatura inesperada parece uma crise. Com um budget, deixa de ser surpresa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO BUDGET -->
+<section>
+  <div class="section-inner">
+    <div class="intro-grid fade-in">
+      <div class="intro-visual">
+        <div class="intro-visual-header">
+          <span>📊</span>
+          <h3>Budget Mensal Suíça</h3>
+        </div>
+        <div class="budget-row"><span class="label">🏠 Renda + encargos</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">🏥 LAMal (seguro saúde)</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">🚆 Transportes públicos</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">🛒 Alimentação</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">🔒 Seguros (RC, jurídico…)</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">📺 SERAFE + subscrições</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">💊 Saúde (franquia, médico…)</span><span class="val">CHF —</span></div>
+        <div class="budget-row"><span class="label">🎓 Educação + formação</span><span class="val">CHF —</span></div>
+        <div class="budget-row total"><span class="label">💰 Poupança mensal</span><span class="val">CHF —</span></div>
+        <div style="margin-top:16px;font-size:11px;color:var(--text-hint);text-align:center;">Excel com cálculos automáticos · Incluído no Claro-app+</div>
+      </div>
+      <div class="intro-text">
+        <h3>O budget que eu<br><em>gostaria de ter tido</em><br>quando cheguei.</h3>
+        <p>Quando cheguei à Suíça, tentei usar templates de budget normais. Não funcionavam — faltavam dezenas de categorias específicas da vida suíça, os valores não faziam sentido em CHF, e tinha de adaptar tudo do zero.</p>
+        <p>Este ficheiro nasceu dessa frustração. Depois de anos a viver e trabalhar na Suíça, construí o budget que eu próprio queria ter tido — com todas as categorias reais, organizadas da forma que faz sentido para um emigrante português.</p>
+        <div class="intro-quote">
+          "Na Suíça, ganhar bem não significa automaticamente viver bem. O custo de vida elevado, as faturas mensais e anuais e as despesas inesperadas fazem com que muitas pessoas percam o controlo do dinheiro sem se aperceberem."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:48px;">
+      <div class="section-label">O que está incluído</div>
+      <h2 class="section-title" style="text-align:center;">12 categorias.<br><span>Todas as despesas da vida na Suíça.</span></h2>
+      <p class="section-sub" style="text-align:center;max-width:540px;margin-left:auto;margin-right:auto;margin-bottom:0;">Cada categoria foi pensada para a realidade de um emigrante português na Suíça — não para um orçamento genérico de outro país.</p>
+    </div>
+    <div class="cat-grid fade-in">
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🏠</div><h3>Despesas da Casa</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Renda</span><span class="cat-item">Luz</span><span class="cat-item">Água e aquecimento</span><span class="cat-item">Telefone</span><span class="cat-item">Internet</span><span class="cat-item">TV</span><span class="cat-item">Mobília</span><span class="cat-item">Manutenção</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🔒</div><h3>Seguros</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">LAMal</span><span class="cat-item">LCA</span><span class="cat-item">Veículo</span><span class="cat-item">RC Ménage</span><span class="cat-item">ECA</span><span class="cat-item">Proteção jurídica</span><span class="cat-item">SERAFE</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🚗</div><h3>Transporte</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Leasing</span><span class="cat-item">Transporte público</span><span class="cat-item">Combustível</span><span class="cat-item">Carregamentos (VE)</span><span class="cat-item">Reparações</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">💊</div><h3>Saúde</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Consultas</span><span class="cat-item">Medicamentos</span><span class="cat-item">Suplementos</span><span class="cat-item">Dentista</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🛒</div><h3>Dia a Dia</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Compras</span><span class="cat-item">Roupa</span><span class="cat-item">Refeições fora</span><span class="cat-item">Lavandaria</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">📺</div><h3>Subscrições</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Netflix</span><span class="cat-item">Spotify</span><span class="cat-item">Apple</span><span class="cat-item">Youtube</span><span class="cat-item">Ginásio</span><span class="cat-item">Claro-app+</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">💰</div><h3>Poupanças</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Fundo de emergência</span><span class="cat-item">Reparações veículo</span><span class="cat-item">Reforma</span><span class="cat-item">Investimentos</span><span class="cat-item">Férias</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">📋</div><h3>Obrigações</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Empréstimos</span><span class="cat-item">Impostos</span><span class="cat-item">Multas</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🎓</div><h3>Educação</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Aulas de língua</span><span class="cat-item">Cursos</span><span class="cat-item">Explicações</span><span class="cat-item">Cursos privados</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🎁</div><h3>Presentes e Doações</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Presentes</span><span class="cat-item">Doações de caridade</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">🐾</div><h3>Animais de Estimação</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Comida</span><span class="cat-item">Veterinário</span><span class="cat-item">Brinquedos</span>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-header"><div class="cat-icon">💼</div><h3>Rendimentos</h3></div>
+        <div class="cat-items">
+          <span class="cat-item">Salário</span><span class="cat-item">Bónus</span><span class="cat-item">Subsídios</span><span class="cat-item">Reembolsos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-inner">
+    <div class="how-grid fade-in">
+      <div>
+        <div class="section-label">Como usar</div>
+        <h2 class="section-title">Simples.<br><span>Preenches os valores.<br>O resto é automático.</span></h2>
+        <div class="how-steps" style="margin-top:32px;">
+          <div class="how-step">
+            <div class="how-step-num">1</div>
+            <div class="how-step-text">
+              <h4>Faz download do ficheiro Excel</h4>
+              <p>Disponível no Claro-app+. Abre no Excel, Numbers, Google Sheets ou qualquer aplicação de folhas de cálculo.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">2</div>
+            <div class="how-step-text">
+              <h4>Preenche os teus rendimentos</h4>
+              <p>Salário líquido, bónus, subsídios, reembolsos — só o que efetivamente entra na tua conta.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">3</div>
+            <div class="how-step-text">
+              <h4>Preenche as tuas despesas</h4>
+              <p>Categoria a categoria. As que não se aplicam ficam a zero — sem problema nenhum.</p>
+            </div>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">4</div>
+            <div class="how-step-text">
+              <h4>O sumário calcula tudo automaticamente</h4>
+              <p>Total dos rendimentos, total das despesas e o que fica no bolso — atualizado em tempo real.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-visual">
+        <h4>Sumário do Mês — exemplo</h4>
+        <div class="summary-row"><span>Total dos Rendimentos</span><span>CHF 4.800</span></div>
+        <div class="summary-row red"><span>Total de Despesas</span><span>CHF 3.640</span></div>
+        <div style="border-bottom:1px solid var(--border);"></div>
+        <div class="summary-row green" style="padding-top:12px;"><span>💰 Limpo (poupança)</span><span>CHF 1.160</span></div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+          <div style="font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:12px;">Distribuição das despesas</div>
+          <div class="summary-row"><span>🏠 Casa</span><span>CHF 1.350</span></div>
+          <div class="summary-row"><span>🔒 Seguros</span><span>CHF 520</span></div>
+          <div class="summary-row"><span>🚗 Transporte</span><span>CHF 380</span></div>
+          <div class="summary-row"><span>🛒 Dia a dia</span><span>CHF 690</span></div>
+          <div class="summary-row"><span>💰 Poupanças</span><span>CHF 400</span></div>
+          <div class="summary-row"><span>Outros</span><span>CHF 300</span></div>
+        </div>
+        <div style="margin-top:16px;font-size:11px;color:var(--text-hint);text-align:center;">Valores ilustrativos · Os teus serão diferentes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA MID -->
+<section class="cta-mid">
+  <div>
+    <h2>O Budget está no teu<br>telemóvel. Sempre contigo.</h2>
+    <p>Acedes ao ficheiro Excel através do Claro-app+. Junto com o Manual do Emigrante, análise de documentos com IA e muito mais.</p>
+    <a href="index.html#download" class="btn-cta">Aceder ao Budget via Claro-app+ →</a>
+    <p class="cta-mid-sub">Incluído na subscrição · Cancela quando quiseres</p>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section>
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:48px;">
+      <div class="section-label">Para quem é</div>
+      <h2 class="section-title" style="text-align:center;">Este Budget é para ti,<br><span>em qualquer fase da vida na Suíça.</span></h2>
+    </div>
+    <div class="forwho-grid fade-in">
+      <div class="forwho-card">
+        <div class="emoji">✈️</div>
+        <h3>Acabaste de chegar</h3>
+        <p>Ainda não percebes bem todos os custos da vida suíça. Este ficheiro mostra-te exatamente o que te espera — antes de seres apanhado desprevenido.</p>
+      </div>
+      <div class="forwho-card">
+        <div class="emoji">📅</div>
+        <h3>Já cá estás mas sem controlo</h3>
+        <p>Ganhas bem mas não sabes para onde vai o dinheiro. Com o Budget, vês tudo de uma vez — e percebes onde podes poupar.</p>
+      </div>
+      <div class="forwho-card">
+        <div class="emoji">🏦</div>
+        <h3>Queres começar a poupar a sério</h3>
+        <p>Para o fundo de emergência, para as férias, para a reforma — o Budget ajuda-te a definir quanto podes reservar todos os meses.</p>
+      </div>
+      <div class="forwho-card">
+        <div class="emoji">👨‍👩‍👧</div>
+        <h3>Tens família ou agregado</h3>
+        <p>As categorias cobrem despesas de agregado familiar — crianças, animais de estimação, educação, saúde de todos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="included">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:48px;">
+      <div class="section-label">O que está incluído</div>
+      <h2 class="section-title" style="text-align:center;">O Budget é só<br><span>o começo.</span></h2>
+      <p class="section-sub" style="text-align:center;max-width:520px;margin-left:auto;margin-right:auto;margin-bottom:0;">No Claro-app+ tens acesso a tudo — o Budget, o Manual, a app, as consultas e muito mais.</p>
+    </div>
+    <div class="included-card fade-in">
+      <h3>✨ Claro-app+ <span class="tag-plus">Acesso completo</span></h3>
+      <p>Uma subscrição. Tudo incluído — sem surpresas.</p>
+      <ul class="feat-list">
+        <li><strong>Budget Mensal Suíça em Excel</strong> — 12 categorias, cálculos automáticos, em CHF</li>
+        <li><strong>Manual do Emigrante PDF</strong> — 43 páginas, 9 secções temáticas com tabelas e exemplos reais</li>
+        <li><strong>Análises ilimitadas de documentos com IA</strong> — foto, PDF ou texto, resposta em português</li>
+        <li><strong>Marcações com especialista</strong> — ilimitadas, via Calendly, para situações que precisam de apoio profissional</li>
+        <li><strong>Gestão do agregado familiar</strong> — um plano para toda a família</li>
+        <li><strong>Avisos automáticos de prazos</strong> — nunca mais perdes uma data crítica</li>
+        <li><strong>Suporte direto por email</strong> com resposta prioritária</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div style="max-width:680px;margin:0 auto;">
+    <h2>Controla o teu dinheiro.<br>Vive melhor na Suíça.</h2>
+    <p>Acede ao Budget, ao Manual e a tudo o que precisas para tomar decisões financeiras com confiança.</p>
+    <a href="index.html#download" class="btn-cta-final">Instala o Claro-app+ agora →</a>
+    <p class="cta-final-sub">Incluído na subscrição · Cancela quando quiseres</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">claro-app.ch</div>
+  <p>Feito com ❤️ para a comunidade portuguesa na Suíça</p>
+  <p><a href="mailto:suporte@claro-app.ch">suporte@claro-app.ch</a> · <a href="privacidade.html">Privacidade</a> · <a href="termos.html">Termos</a></p>
+  <p style="margin-top:16px;font-size:11px;opacity:0.35;">© 2025 Claro-app.ch · Todos os direitos reservados</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
