@@ -327,6 +327,12 @@
     .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+    /* Desktop: comparativo */
+    @media (min-width: 769px) {
+      .compare-desktop { display: grid !important; }
+      .compare-mobile { display: none !important; }
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       nav { padding: 14px 20px; }
@@ -512,7 +518,7 @@
     </div>
     
     <!-- Desktop: grid lado a lado -->
-    <div class="compare-desktop" style="display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:900px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
+    <div class="compare-desktop" id="compareDesktop" style="grid-template-columns:1fr 1fr;gap:0;max-width:900px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
       <div style="background:#f5f5f3;padding:20px 28px;border-bottom:1px solid var(--border);">
         <div style="font-size:15px;font-weight:600;color:var(--text-muted);">😟 Sem Claro-app</div>
       </div>
@@ -538,7 +544,7 @@
     </div>
 
     <!-- Mobile: toggle interativo -->
-    <div class="compare-mobile" style="display:none;max-width:500px;margin:0 auto;">
+    <div class="compare-mobile" id="compareMobile" style="display:none;max-width:500px;margin:0 auto;">
       <div style="display:flex;background:#F2F0E9;border-radius:12px;padding:4px;margin-bottom:20px;gap:4px;">
         <button id="toggleBad" onclick="showCompare('bad')" style="flex:1;padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:none;font-family:inherit;background:white;color:#791F1F;box-shadow:0 2px 8px rgba(0,0,0,0.08);">😟 Sem Claro-app</button>
         <button id="toggleGood" onclick="showCompare('good')" style="flex:1;padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:none;font-family:inherit;background:transparent;color:#A8A69F;">✅ Com Claro-app</button>
@@ -992,6 +998,22 @@ async function submitNotify() {
   document.getElementById('emailFormWrap').style.display = 'none';
   document.getElementById('notifySuccess').style.display = 'block';
 }
+
+// Mostrar/esconder comparativo baseado no tamanho do ecrã
+function handleCompareLayout() {
+  var desktop = document.getElementById('compareDesktop');
+  var mobile = document.getElementById('compareMobile');
+  if (!desktop || !mobile) return;
+  if (window.innerWidth <= 768) {
+    desktop.style.display = 'none';
+    mobile.style.display = 'block';
+  } else {
+    desktop.style.display = 'grid';
+    mobile.style.display = 'none';
+  }
+}
+window.addEventListener('resize', handleCompareLayout);
+document.addEventListener('DOMContentLoaded', handleCompareLayout);
 
 // Toggle comparativo mobile
 function showCompare(type) {
