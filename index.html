@@ -357,10 +357,7 @@
       .section-grid > div { margin-bottom: 32px; }
       /* Section padding mobile */
       section { padding-left: 20px !important; padding-right: 20px !important; }
-      /* Comparison table mobile - hide middle column, show only key+claro */
-      .compare-table th:nth-child(2), .compare-table td:nth-child(2) { display: none; }
-      table { width: 100% !important; }
-      table th, table td { padding: 10px 8px !important; font-size: 13px !important; }
+      /* Comparison table mobile - handled by new classes */
       .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
       /* Secções com grid inline (Manual, Budget, Consultor) */
       section > div > div[style*="grid-template-columns:1fr 1fr"],
@@ -378,6 +375,8 @@
       /* Toggle comparativo mobile */
       .compare-desktop { display: none !important; }
       .compare-mobile { display: block !important; }
+      /* Esconder tabela antiga da comparação no mobile */
+      .compare-table-old { display: none !important; }
       /* Secções com padding grande */
       section[style*="padding:100px 48px"],
       section[style*="padding: 100px 48px"] { padding: 60px 20px !important; }
