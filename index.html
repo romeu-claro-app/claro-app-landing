@@ -365,13 +365,13 @@
       section { padding-left: 20px !important; padding-right: 20px !important; }
       /* Comparison table mobile - handled by new classes */
       .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-      /* Secções com grid inline (Manual, Budget, Consultor) */
-      section > div > div[style*="grid-template-columns:1fr 1fr"],
-      section > div > div[style*="grid-template-columns: 1fr 1fr"] {
+      /* Secções com grid inline (Manual, Budget, Consultor) — excluir compare-desktop */
+      section > div > div[style*="grid-template-columns:1fr 1fr"]:not(.compare-desktop),
+      section > div > div[style*="grid-template-columns: 1fr 1fr"]:not(.compare-desktop) {
         display: block !important;
       }
-      section > div > div[style*="grid-template-columns:1fr 1fr"] > div,
-      section > div > div[style*="grid-template-columns: 1fr 1fr"] > div {
+      section > div > div[style*="grid-template-columns:1fr 1fr"]:not(.compare-desktop) > div,
+      section > div > div[style*="grid-template-columns: 1fr 1fr"]:not(.compare-desktop) > div {
         order: unset !important;
         margin-bottom: 32px;
       }
