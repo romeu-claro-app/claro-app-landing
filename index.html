@@ -333,6 +333,18 @@
       .hero { padding: 100px 20px 60px; }
       .hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .hero-mockup { display: none; }
+      /* Hero mobile com mockup por baixo */
+      @media (max-width: 768px) {
+        .hero-mockup {
+          display: flex !important;
+          justify-content: center;
+          margin-top: 36px;
+          position: relative;
+        }
+        .mockup-phone { width: 200px; }
+        .floating-badge { right: -8px; top: 20px; font-size: 10px; padding: 7px 11px; }
+        .floating-badge2 { left: -8px; bottom: 50px; font-size: 10px; padding: 7px 11px; }
+      }
       .stats { padding: 40px 20px; }
       .stats-inner { grid-template-columns: 1fr; gap: 24px; }
       .features, .how, .pricing, .about, .appstore { padding: 60px 20px; }
@@ -360,9 +372,12 @@
         order: unset !important;
         margin-bottom: 32px;
       }
-      /* Tabela comparação — coluna Claro-app+ visível, resto simplificado */
-      table { font-size: 13px !important; }
-      table td, table th { padding: 10px 10px !important; }
+      /* Tabela consultor mobile */
+      .compare-table { display: none !important; }
+      .compare-table-mobile { display: block !important; }
+      /* Toggle comparativo mobile */
+      .compare-desktop { display: none !important; }
+      .compare-mobile { display: block !important; }
       /* Secções com padding grande */
       section[style*="padding:100px 48px"],
       section[style*="padding: 100px 48px"] { padding: 60px 20px !important; }
@@ -497,47 +512,52 @@
       <h2 class="section-title">Não é só uma app de tradução.<br>É a diferença entre navegar<br>e estar perdido.</h2>
     </div>
     
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:900px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
-      
-      <!-- Cabeçalho -->
+    <!-- Desktop: grid lado a lado -->
+    <div class="compare-desktop" style="display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:900px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
       <div style="background:#f5f5f3;padding:20px 28px;border-bottom:1px solid var(--border);">
         <div style="font-size:15px;font-weight:600;color:var(--text-muted);">😟 Sem Claro-app</div>
       </div>
       <div style="background:var(--green);padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.2);">
         <div style="font-size:15px;font-weight:600;color:white;">✅ Com Claro-app</div>
       </div>
-      
-      <!-- Linha 1 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">Recebes uma carta em alemão e não percebes nada — perdes prazos e pagas multas.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Fotografas o documento e tens a explicação em segundos — sabes exatamente o que fazer e quando.</div>
-      
-      <!-- Linha 2 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">O teu "conselheiro" só quer vender o que lhe convém, sem conhecer as tuas necessidades reais.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Marcas consultas ilimitadas com alguém que te conhece e não tem agenda escondida.</div>
-      
-      <!-- Linha 3 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">Não sabes para onde vai o dinheiro — a Suíça é cara e surpreende quem não está preparado.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Budget Mensal feito para a realidade suíça — controlas cada franco e planeas o futuro.</div>
-      
-      <!-- Linha 4 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">Cada problema parece um obstáculo intransponível — sentes-te perdido e sozinho.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Tens um guia completo de vida na Suíça sempre no bolso — nunca mais te sentes sozinho.</div>
-      
-      <!-- Linha 5 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">Declaração de impostos em alemão — pagas mais do que devias ou cometes erros sem saber.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Percebes o que tens de entregar, quando e como — sem erros e sem surpresas desagradáveis.</div>
-      
-      <!-- Linha 6 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">Assinas um contrato de arrendamento sem perceber as cláusulas — surpresas desagradáveis depois.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Analisas o contrato antes de assinar, conheces os teus direitos e negocias em posição de força.</div>
-      
-      <!-- Linha 7 -->
       <div style="background:white;padding:18px 28px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted);line-height:1.5;">Não percebes as cartas do Seguro de saúde — pagas preços errados ou perdes coberturas importantes.</div>
       <div style="background:#f0faf5;padding:18px 28px;border-bottom:1px solid #d4edd9;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Entendes o teu seguro de saúde, optimizas as coberturas e poupas centenas de francos por ano.</div>
-      
-      <!-- Linha 8 -->
       <div style="background:white;padding:18px 28px;font-size:14px;color:var(--text-muted);line-height:1.5;">Não percebes o teu contrato de trabalho nem os teus direitos — és apanhado desprevenido.</div>
       <div style="background:#f0faf5;padding:18px 28px;font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">Analisas o contrato, percebes os teus direitos e sabes sempre quando e como reclamar o que é teu.</div>
+    </div>
+
+    <!-- Mobile: toggle interativo -->
+    <div class="compare-mobile" style="display:none;max-width:500px;margin:0 auto;">
+      <div style="display:flex;background:#F2F0E9;border-radius:12px;padding:4px;margin-bottom:20px;gap:4px;">
+        <button id="toggleBad" onclick="showCompare('bad')" style="flex:1;padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:none;font-family:inherit;background:white;color:#791F1F;box-shadow:0 2px 8px rgba(0,0,0,0.08);">😟 Sem Claro-app</button>
+        <button id="toggleGood" onclick="showCompare('good')" style="flex:1;padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:none;font-family:inherit;background:transparent;color:#A8A69F;">✅ Com Claro-app</button>
+      </div>
+      <div id="compareBad" style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Carta oficial</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Recebes uma carta em alemão e não percebes nada.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Perdes prazos e pagas multas.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Conselho</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">O teu "conselheiro" só quer vender o que lhe convém.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sem conhecer as tuas necessidades reais.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Finanças</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Não sabes para onde vai o dinheiro.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">A Suíça é cara e surpreende quem não está preparado.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Problemas</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Cada problema parece intransponível.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sentes-te perdido e sozinho.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Impostos</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Declaração em alemão — pagas mais do que devias.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Ou cometes erros sem saber.</div></div>
+      </div>
+      <div id="compareGood" style="display:none;flex-direction:column;gap:10px;">
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Carta oficial</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Fotografas o documento e tens a explicação em segundos.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sabes exatamente o que fazer e quando.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Conselho</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Marcas consultas com alguém que te conhece.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sem agenda escondida, sempre em português.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Finanças</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Budget Mensal feito para a realidade suíça.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Controlas cada franco e planeas o futuro.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Problemas</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Tens um guia completo sempre no bolso.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Nunca mais te sentes sozinho.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Impostos</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Percebes o que tens de entregar, quando e como.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sem erros e sem surpresas desagradáveis.</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -785,8 +805,9 @@
         <h2 class="section-title" style="font-size:clamp(22px,3vw,34px);">Um consultor sem agenda escondida — incluído no teu plano</h2>
         <p style="font-size:16px;color:var(--text-muted);line-height:1.8;max-width:640px;margin:0 auto;font-weight:300;">A maioria dos consultores cobra pelo tempo ou vende-te algo para justificar a visita. Com o Claro-app+, isso não existe.</p>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="compare-table" style="width:100%;border-collapse:collapse;font-size:15px;">
+      <!-- Desktop: tabela normal -->
+      <div class="compare-table" style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:15px;">
           <thead>
             <tr>
               <th style="padding:14px 20px;text-align:left;color:var(--text-muted);font-weight:500;border-bottom:2px solid var(--border);width:30%;"></th>
@@ -795,43 +816,54 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Custo da consulta</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">CHF 150 a CHF 500 por sessão</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Incluído na anuidade</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Agenda escondida</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Frequentemente ligado a seguros ou produtos financeiros</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">O conselho é livre de conflitos de interesse</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Disponibilidade</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Marcação difícil, semanas de espera</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Marcação direta pela app</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Número de consultas</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Pagas cada uma</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Ilimitadas</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Língua</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Muitas vezes em francês ou alemão</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Sempre em português</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Conhece a realidade emigrante</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Raramente</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Vive e trabalha no mesmo contexto</td>
-            </tr>
-            <tr>
-              <td style="padding:16px 20px;color:var(--text);font-weight:500;">Independência do conselho</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Pode recomendar o que lhe dá mais comissão</td>
-              <td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);border-radius:0 0 8px 0;">Aconselha o que é melhor para ti</td>
-            </tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:16px 20px;color:var(--text);font-weight:500;">Custo da consulta</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">CHF 150 a CHF 500 por sessão</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Incluído na anuidade</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:16px 20px;color:var(--text);font-weight:500;">Agenda escondida</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Frequentemente ligado a seguros ou produtos financeiros</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">O conselho é livre de conflitos de interesse</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:16px 20px;color:var(--text);font-weight:500;">Disponibilidade</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Marcação difícil, semanas de espera</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Marcação direta pela app</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:16px 20px;color:var(--text);font-weight:500;">Número de consultas</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Pagas cada uma</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Ilimitadas</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:16px 20px;color:var(--text);font-weight:500;">Língua</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Muitas vezes em francês ou alemão</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Sempre em português</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:16px 20px;color:var(--text);font-weight:500;">Conhece a realidade emigrante</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Raramente</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);">Vive e trabalha no mesmo contexto</td></tr>
+            <tr><td style="padding:16px 20px;color:var(--text);font-weight:500;">Independência do conselho</td><td style="padding:16px 20px;text-align:center;color:var(--text-muted);">Pode recomendar o que lhe dá mais comissão</td><td style="padding:16px 20px;text-align:center;color:var(--green);font-weight:500;background:var(--green-light);border-radius:0 0 8px 0;">Aconselha o que é melhor para ti</td></tr>
           </tbody>
         </table>
+      </div>
+      <!-- Mobile: cards empilhados -->
+      <div class="compare-table-mobile" style="display:none;">
+        <div style="background:white;border-radius:14px;border:1px solid var(--border);overflow:hidden;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;background:#F2F0E9;">
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#A8A69F;border-right:1px solid var(--border);">😟 Consultor tradicional</div>
+            <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#0F6E56;background:var(--green-light);">✅ Claro-app+</div>
+          </div>
+          <div style="padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#A8A69F;background:#FAFAF8;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">Custo da consulta</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+            <div style="padding:13px 14px;font-size:12px;color:#5A5955;border-right:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.4;">CHF 150 a CHF 500 por sessão</div>
+            <div style="padding:13px 14px;font-size:12px;color:var(--green);font-weight:600;background:var(--green-light);text-align:center;display:flex;align-items:center;justify-content:center;">Incluído na anuidade</div>
+          </div>
+          <div style="padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#A8A69F;background:#FAFAF8;border-bottom:1px solid var(--border);">Agenda escondida</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+            <div style="padding:13px 14px;font-size:12px;color:#5A5955;border-right:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.4;">Ligado a seguros ou produtos financeiros</div>
+            <div style="padding:13px 14px;font-size:12px;color:var(--green);font-weight:600;background:var(--green-light);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.4;">Livre de conflitos de interesse</div>
+          </div>
+          <div style="padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#A8A69F;background:#FAFAF8;border-bottom:1px solid var(--border);">Disponibilidade</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+            <div style="padding:13px 14px;font-size:12px;color:#5A5955;border-right:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.4;">Semanas de espera</div>
+            <div style="padding:13px 14px;font-size:12px;color:var(--green);font-weight:600;background:var(--green-light);text-align:center;display:flex;align-items:center;justify-content:center;">Marcação pela app</div>
+          </div>
+          <div style="padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#A8A69F;background:#FAFAF8;border-bottom:1px solid var(--border);">Número de consultas</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+            <div style="padding:13px 14px;font-size:12px;color:#5A5955;border-right:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;">Pagas cada uma</div>
+            <div style="padding:13px 14px;font-size:12px;color:var(--green);font-weight:600;background:var(--green-light);text-align:center;display:flex;align-items:center;justify-content:center;">Ilimitadas</div>
+          </div>
+          <div style="padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#A8A69F;background:#FAFAF8;border-bottom:1px solid var(--border);">Língua</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+            <div style="padding:13px 14px;font-size:12px;color:#5A5955;border-right:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.4;">Muitas vezes em francês ou alemão</div>
+            <div style="padding:13px 14px;font-size:12px;color:var(--green);font-weight:600;background:var(--green-light);text-align:center;display:flex;align-items:center;justify-content:center;">Sempre em português</div>
+          </div>
+          <div style="padding:8px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#A8A69F;background:#FAFAF8;border-bottom:1px solid var(--border);">Realidade emigrante</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;">
+            <div style="padding:13px 14px;font-size:12px;color:#5A5955;border-right:1px solid var(--border);text-align:center;display:flex;align-items:center;justify-content:center;">Raramente</div>
+            <div style="padding:13px 14px;font-size:12px;color:var(--green);font-weight:600;background:var(--green-light);text-align:center;display:flex;align-items:center;justify-content:center;line-height:1.4;">Vive no mesmo contexto</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -960,6 +992,33 @@ async function submitNotify() {
   }
   document.getElementById('emailFormWrap').style.display = 'none';
   document.getElementById('notifySuccess').style.display = 'block';
+}
+
+// Toggle comparativo mobile
+function showCompare(type) {
+  var bad = document.getElementById('compareBad');
+  var good = document.getElementById('compareGood');
+  var btnBad = document.getElementById('toggleBad');
+  var btnGood = document.getElementById('toggleGood');
+  if (type === 'bad') {
+    bad.style.display = 'flex';
+    good.style.display = 'none';
+    btnBad.style.background = 'white';
+    btnBad.style.color = '#791F1F';
+    btnBad.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+    btnGood.style.background = 'transparent';
+    btnGood.style.color = '#A8A69F';
+    btnGood.style.boxShadow = 'none';
+  } else {
+    bad.style.display = 'none';
+    good.style.display = 'flex';
+    btnGood.style.background = '#1D9E75';
+    btnGood.style.color = 'white';
+    btnGood.style.boxShadow = '0 2px 8px rgba(29,158,117,0.3)';
+    btnBad.style.background = 'transparent';
+    btnBad.style.color = '#A8A69F';
+    btnBad.style.boxShadow = 'none';
+  }
 }
 
 // Scroll animations
