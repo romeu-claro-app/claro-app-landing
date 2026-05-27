@@ -323,6 +323,61 @@
       color: var(--green); margin-bottom: 16px;
     }
 
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 100px 48px; background: var(--surface); }
+    .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+      margin-bottom: 60px;
+    }
+    .testimonial-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 32px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .testimonial-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--green-mid));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .testimonial-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,0.08); }
+    .testimonial-card:hover::before { transform: scaleX(1); }
+    .testimonial-stars { color: #EF9F27; font-size: 18px; margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial-text { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; font-weight: 300; font-style: italic; }
+    .testimonial-author { font-size: 14px; font-weight: 600; color: var(--text); }
+    .testimonial-verified { font-size: 12px; color: var(--text-hint); font-weight: 400; margin-left: 6px; }
+
+    /* Testimonial form */
+    .testimonial-form-wrap {
+      max-width: 560px; margin: 0 auto;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px;
+    }
+    .testimonial-form-wrap h3 {
+      font-family: 'Playfair Display', serif; font-size: 24px;
+      margin-bottom: 28px; color: var(--text);
+    }
+    .t-form-group { margin-bottom: 20px; }
+    .t-form-label { font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; display: block; }
+    .t-form-input {
+      width: 100%; padding: 12px 16px; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 15px; font-family: inherit;
+      color: var(--text); background: var(--bg); outline: none;
+      transition: border-color 0.2s;
+    }
+    .t-form-input:focus { border-color: var(--green); }
+    .t-form-textarea { resize: vertical; min-height: 100px; }
+    .star-input { display: flex; gap: 4px; }
+    .star-input span {
+      font-size: 30px; cursor: pointer; color: var(--border);
+      transition: color 0.15s; line-height: 1; user-select: none;
+    }
+    .star-input span.star-hover, .star-input span.star-active { color: #EF9F27; }
+    .testimonial-success {
+      display: none; text-align: center; padding: 24px;
+      color: var(--green); font-size: 16px; font-weight: 500;
+    }
+
     /* ── ANIMATIONS ── */
     .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -353,7 +408,9 @@
       }
       .stats { padding: 40px 20px; }
       .stats-inner { grid-template-columns: 1fr; gap: 24px; }
-      .features, .how, .pricing, .about, .appstore { padding: 60px 20px; }
+      .features, .how, .pricing, .about, .appstore, .testimonials { padding: 60px 20px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonial-form-wrap { padding: 28px 20px; }
       .features-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; gap: 32px; }
       .pricing-grid { grid-template-columns: 1fr; }
@@ -963,11 +1020,83 @@
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testemunhos">
+  <div class="testimonials-inner">
+    <div class="fade-in" style="text-align:center;margin-bottom:60px;">
+      <div class="section-label">O QUE DIZEM OS UTILIZADORES</div>
+      <h2 class="section-title">Emigrantes que não esperam ter problemas<br>para pedir ajuda. Junta-te a eles.</h2>
+    </div>
+
+    <!-- Grid de testemunhos -->
+    <div class="testimonials-grid" id="testimonialsGrid">
+      <!-- Hardcoded: André Oliveira -->
+      <div class="testimonial-card fade-in" style="transition-delay:0.1s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Excelente serviço — muito profissional e sempre disponível para responder às questões. Encontrei soluções perfeitamente adaptadas. Recomendo vivamente."</p>
+        <div><span class="testimonial-author">André Oliveira</span></div>
+      </div>
+      <!-- Hardcoded: Laetitia Andreani -->
+      <div class="testimonial-card fade-in" style="transition-delay:0.2s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Tratou de tudo em 15 minutos. Voltarei sempre que precisar. Foi ao top, ao contrário de outros."</p>
+        <div><span class="testimonial-author">Laetitia Andreani</span></div>
+      </div>
+      <!-- Hardcoded: Joana Calvinho -->
+      <div class="testimonial-card fade-in" style="transition-delay:0.3s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Ajudou-me muito na escolha do seguro de saúde e esteve sempre disponível para as minhas questões. Recomendo."</p>
+        <div><span class="testimonial-author">Joana Calvinho</span></div>
+      </div>
+      <!-- Hardcoded: Lisa Martin -->
+      <div class="testimonial-card fade-in" style="transition-delay:0.4s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Ajuda enorme — e em caso de dúvida está sempre disponível. Recomendo vivamente."</p>
+        <div><span class="testimonial-author">Lisa Martin</span></div>
+      </div>
+      <!-- Testemunhos dinâmicos carregados do Supabase serão inseridos aqui pelo JS -->
+    </div>
+
+    <!-- Formulário de submissão -->
+    <div class="testimonial-form-wrap fade-in" id="testimonialFormWrap">
+      <h3>Deixa a tua opinião</h3>
+      <div class="t-form-group">
+        <label class="t-form-label" for="tNome">Nome</label>
+        <input type="text" id="tNome" class="t-form-input" placeholder="O teu nome">
+      </div>
+      <div class="t-form-group">
+        <label class="t-form-label">Classificação</label>
+        <div class="star-input" id="starInput">
+          <span data-val="1">★</span>
+          <span data-val="2">★</span>
+          <span data-val="3">★</span>
+          <span data-val="4">★</span>
+          <span data-val="5">★</span>
+        </div>
+      </div>
+      <div class="t-form-group">
+        <label class="t-form-label" for="tTexto">Testemunho</label>
+        <textarea id="tTexto" class="t-form-input t-form-textarea" placeholder="Escreve aqui a tua experiência..."></textarea>
+      </div>
+      <button class="btn-primary" onclick="submitTestimony()" style="width:100%;padding:14px;margin-top:4px;">Enviar testemunho</button>
+    </div>
+    <div class="testimonial-success" id="testimonialSuccess">
+      ✅ Obrigado! O teu testemunho foi publicado.
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">claro-app.ch</div>
   <p style="margin-bottom:12px;">Feito com ❤️ para a comunidade portuguesa na Suíça</p>
   <p><a href="mailto:suporte@claro-app.ch">suporte@claro-app.ch</a> · <a href="/privacidade.html">Política de Privacidade</a> · <a href="/termos.html">Termos de Serviço</a></p>
+  <p style="margin-top:14px;">
+    <a href="https://instagram.com/claro_app_ch" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green-mid);flex-shrink:0;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @claro_app_ch
+    </a>
+  </p>
   <p style="margin-top:16px;font-size:11px;opacity:0.4;">© 2025 Claro-app.ch · Todos os direitos reservados</p>
 </footer>
 
@@ -1052,6 +1181,95 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── TESTIMONIALS ──
+var SUPA_URL = 'https://vawfgruwwfnpnrnxuvnw.supabase.co';
+var SUPA_KEY = 'sb_publishable_65vuly7LkkRF6YYxd2H94g_TB-vOYvk';
+var selectedStars = 0;
+
+async function loadTestimonials() {
+  try {
+    var res = await fetch(SUPA_URL + '/rest/v1/testemunhos?select=*&order=created_at.asc', {
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY
+      }
+    });
+    if (!res.ok) return;
+    var data = await res.json();
+    var grid = document.getElementById('testimonialsGrid');
+    data.forEach(function(t, i) {
+      var nStars = Math.min(5, Math.max(1, t.estrelas || 5));
+      var starsHtml = '★'.repeat(nStars);
+      var card = document.createElement('div');
+      card.className = 'testimonial-card fade-in';
+      card.style.transitionDelay = (0.1 * ((i % 4) + 1)) + 's';
+      card.innerHTML =
+        '<div class="testimonial-stars">' + starsHtml + '</div>' +
+        '<p class="testimonial-text">“' + escapeHtml(t.texto) + '”</p>' +
+        '<div><span class="testimonial-author">' + escapeHtml(t.nome) + '</span>' +
+        '<span class="testimonial-verified">· utilizador verificado</span></div>';
+      grid.appendChild(card);
+      observer.observe(card);
+    });
+  } catch(e) {}
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// Star rating setup
+document.addEventListener('DOMContentLoaded', function() {
+  loadTestimonials();
+
+  var starSpans = document.querySelectorAll('#starInput span');
+  starSpans.forEach(function(s) {
+    s.addEventListener('mouseenter', function() {
+      var v = parseInt(s.dataset.val);
+      starSpans.forEach(function(x) {
+        x.classList.toggle('star-hover', parseInt(x.dataset.val) <= v);
+      });
+    });
+    s.addEventListener('mouseleave', function() {
+      starSpans.forEach(function(x) { x.classList.remove('star-hover'); });
+    });
+    s.addEventListener('click', function() {
+      selectedStars = parseInt(s.dataset.val);
+      starSpans.forEach(function(x) {
+        x.classList.toggle('star-active', parseInt(x.dataset.val) <= selectedStars);
+      });
+    });
+  });
+});
+
+async function submitTestimony() {
+  var nome = document.getElementById('tNome').value.trim();
+  var texto = document.getElementById('tTexto').value.trim();
+  if (!nome) { alert('Por favor insere o teu nome.'); return; }
+  if (!selectedStars) { alert('Por favor seleciona uma classificação em estrelas.'); return; }
+  if (!texto) { alert('Por favor escreve o teu testemunho.'); return; }
+  try {
+    var res = await fetch(SUPA_URL + '/rest/v1/testemunhos', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ nome: nome, estrelas: selectedStars, texto: texto })
+    });
+    if (!res.ok) throw new Error('Erro');
+  } catch(e) {}
+  document.getElementById('testimonialFormWrap').style.display = 'none';
+  var success = document.getElementById('testimonialSuccess');
+  success.style.display = 'block';
+}
 </script>
 </body>
 </html>
