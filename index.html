@@ -234,7 +234,7 @@
     .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 
     /* ── PRICING ── */
-    .pricing { padding: 100px 48px; }
+    .pricing { padding: 100px 48px 72px; }
     .pricing-inner { max-width: 1100px; margin: 0 auto; }
     .pricing-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; align-items: start;
@@ -755,6 +755,18 @@
         <a href="https://app.claro-app.ch" target="_blank" rel="noopener" class="pricing-btn pricing-btn-white" style="display:block;text-decoration:none;">Escolher Claro Total</a>
       </div>
     </div>
+
+    <!-- ANCORAGEM DE PREÇO (remate dos planos) -->
+    <div class="price-anchor fade-in" style="max-width:1000px;margin:28px auto 0;background:#0F6E56;border-radius:24px;padding:clamp(32px,5vw,52px);color:white;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:rgba(255,255,255,0.05);border-radius:50%;pointer-events:none;"></div>
+      <div style="position:absolute;bottom:-60px;left:-40px;width:180px;height:180px;background:rgba(255,255,255,0.04);border-radius:50%;pointer-events:none;"></div>
+      <p style="font-family:'Playfair Display',serif;font-size:clamp(21px,2.8vw,30px);line-height:1.4;margin-bottom:24px;position:relative;">
+        <strong>Quem te ajuda "de graça" acaba quase sempre a vender-te algo.</strong> Um seguro que não precisas, um contrato com comissão lá no meio. A Claro-app não te empurra nada — explica-te o que se passa e deixa-te decidir.
+      </p>
+      <p style="font-size:17px;line-height:1.85;font-weight:300;opacity:0.95;position:relative;margin:0;">
+        E uma consulta avulsa com quem percebe mesmo do assunto custa aprox. <strong style="font-weight:600;white-space:nowrap;">CHF 300 a 500</strong>. No Claro Total, tens uma todos os meses — mais análises ilimitadas de documentos, o Manual do Emigrante e a ferramenta de Budget. Tudo por <strong style="color:var(--green-mid);font-weight:700;font-size:1.2em;white-space:nowrap;">CHF 19</strong>.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -769,22 +781,6 @@
     document.getElementById('billAnnual').classList.toggle('active', mode === 'a');
   }
 </script>
-
-<!-- ANCORAGEM DE PREÇO -->
-<section style="padding:100px 48px;">
-  <div style="max-width:900px;margin:0 auto;">
-    <div class="fade-in" style="background:#0F6E56;border-radius:24px;padding:clamp(32px,5vw,60px);color:white;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:rgba(255,255,255,0.05);border-radius:50%;pointer-events:none;"></div>
-      <div style="position:absolute;bottom:-60px;left:-40px;width:180px;height:180px;background:rgba(255,255,255,0.04);border-radius:50%;pointer-events:none;"></div>
-      <p style="font-family:'Playfair Display',serif;font-size:clamp(21px,2.8vw,30px);line-height:1.4;margin-bottom:24px;position:relative;">
-        <strong>Quem te ajuda "de graça" acaba quase sempre a vender-te algo.</strong> Um seguro que não precisas, um contrato com comissão lá no meio. A Claro-app não te empurra nada — explica-te o que se passa e deixa-te decidir.
-      </p>
-      <p style="font-size:17px;line-height:1.85;font-weight:300;opacity:0.95;position:relative;margin:0;">
-        E uma consulta avulsa com quem percebe mesmo do assunto custa aprox. <strong style="font-weight:600;white-space:nowrap;">CHF 300 a 500</strong>. No Claro Total, tens uma todos os meses — mais análises ilimitadas de documentos, o Manual do Emigrante e a ferramenta de Budget. Tudo por <strong style="color:var(--green-mid);font-weight:700;font-size:1.2em;white-space:nowrap;">CHF 19</strong>.
-      </p>
-    </div>
-  </div>
-</section>
 
 <!-- MANUAL -->
 <section style="padding:100px 48px;">
