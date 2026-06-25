@@ -489,7 +489,13 @@
       /* Secções com padding grande */
       section[style*="padding:100px 48px"],
       section[style*="padding: 100px 48px"] { padding: 60px 20px !important; }
+      /* Ferramentas: empilha (texto em cima, preview por baixo) */
+      .tool-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
     }
+
+    /* ── FERRAMENTAS (Manual / Budget) — 2 colunas desktop ── */
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .tool-preview { border-radius: 20px; position: relative; overflow: hidden; }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -785,7 +791,8 @@
 <!-- MANUAL -->
 <section style="padding:100px 48px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div class="section-grid">
+    <div class="tool-grid">
+      <!-- Texto -->
       <div class="fade-in">
         <div class="section-label">Incluído no Claro+</div>
         <h2 class="section-title" style="font-size:clamp(24px,3.5vw,38px);">"Os Melhores Anos da Minha Vida como Emigrante"</h2>
@@ -803,26 +810,27 @@
             <span style="color:var(--green);font-weight:600;">✓</span> Escrito por quem viveu na pele o que tu vives
           </div>
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);">
-            <span style="color:var(--green);font-weight:600;">✓</span> Download em PDF — lês quando e onde quiseres
+            <span style="color:var(--green);font-weight:600;">✓</span> Lês dentro da app, sempre contigo
           </div>
         </div>
         <a href="manual.html" class="btn-primary">Ver o Manual completo →</a>
       </div>
-      <div class="fade-in" style="transition-delay:0.2s;">
-        <div style="background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);border-radius:20px;padding:40px;color:white;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
-          <div style="font-size:48px;margin-bottom:16px;">📖</div>
-          <div style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px;line-height:1.3;">"Os Melhores Anos da Minha Vida como Emigrante"</div>
-          <div style="font-size:13px;opacity:0.8;margin-bottom:24px;">Guia de Integração e Construção de uma Vida Rica como Emigrante na Suíça</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="font-size:12px;opacity:0.9;">📋 Preparação para a chegada</div>
-            <div style="font-size:12px;opacity:0.9;">🏥 Seguros e saúde</div>
-            <div style="font-size:12px;opacity:0.9;">💼 Trabalho e direitos</div>
-            <div style="font-size:12px;opacity:0.9;">🏠 Habitação e contratos</div>
-            <div style="font-size:12px;opacity:0.9;">💰 Impostos e finanças</div>
-            <div style="font-size:12px;opacity:0.9;">🏦 Reforma e poupança</div>
+      <!-- Preview -->
+      <div class="fade-in tool-preview" style="transition-delay:0.2s;background:#0F6E56;padding:36px;color:white;">
+        <div style="position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:rgba(255,255,255,0.05);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:relative;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;margin-bottom:14px;">Manual do Emigrante</div>
+          <div style="font-family:'Playfair Display',serif;font-size:20px;line-height:1.3;margin-bottom:6px;">"Os Melhores Anos da Minha Vida como Emigrante"</div>
+          <div style="font-size:12px;opacity:0.7;margin-bottom:22px;">Guia de Integração e Construção de uma Vida Rica como Emigrante na Suíça</div>
+          <div style="display:flex;flex-direction:column;">
+            <div style="font-size:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);">Preparação para a chegada</div>
+            <div style="font-size:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);">Seguros e saúde</div>
+            <div style="font-size:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);">Trabalho e direitos</div>
+            <div style="font-size:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);">Habitação e contratos</div>
+            <div style="font-size:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.12);">Impostos e finanças</div>
+            <div style="font-size:13px;padding:11px 0;opacity:0.6;">+ mais capítulos</div>
           </div>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2);font-size:12px;opacity:0.7;">Incluído no Claro+ · PDF download</div>
+          <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.2);font-size:12px;opacity:0.7;">Incluído no Claro+</div>
         </div>
       </div>
     </div>
@@ -832,12 +840,13 @@
 <!-- BUDGET -->
 <section style="padding:100px 48px;background:var(--surface);">
   <div style="max-width:1100px;margin:0 auto;">
-    <div class="section-grid">
-      <div class="fade-in" style="order:2;">
+    <div class="tool-grid">
+      <!-- Texto -->
+      <div class="fade-in">
         <div class="section-label">Incluído no Claro+</div>
         <h2 class="section-title">Budget Mensal Suíça</h2>
         <p style="font-size:16px;color:var(--text-muted);line-height:1.8;margin-bottom:16px;font-weight:300;">A Suíça é um dos países mais caros do mundo — mas também é um dos que melhor recompensa quem sabe gerir o dinheiro.</p>
-        <p style="font-size:16px;color:var(--text-muted);line-height:1.8;margin-bottom:28px;font-weight:300;">Este Excel foi criado especificamente para a realidade suíça — com todas as categorias de despesa típicas de um emigrante, em francos suíços, pronto a usar no primeiro dia.</p>
+        <p style="font-size:16px;color:var(--text-muted);line-height:1.8;margin-bottom:28px;font-weight:300;">A ferramenta de Budget vive na app — feita especificamente para a realidade suíça, com todas as categorias de despesa típicas de um emigrante, em francos suíços, pronta a usar desde o primeiro dia.</p>
         <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);">
             <span style="color:var(--green);font-weight:600;">✓</span> Categorias adaptadas à vida na Suíça
@@ -846,43 +855,47 @@
             <span style="color:var(--green);font-weight:600;">✓</span> Em francos suíços (CHF)
           </div>
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);">
-            <span style="color:var(--green);font-weight:600;">✓</span> Cálculos automáticos — só preenchas os valores
+            <span style="color:var(--green);font-weight:600;">✓</span> Totais automáticos — só preenches os valores
           </div>
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);">
             <span style="color:var(--green);font-weight:600;">✓</span> Controla poupanças, despesas fixas e variáveis
           </div>
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);">
-            <span style="color:var(--green);font-weight:600;">✓</span> Download em Excel — funciona em qualquer dispositivo
+            <span style="color:var(--green);font-weight:600;">✓</span> Mês a mês, ano a ano, guardado na app
           </div>
         </div>
         <a href="budget.html" class="btn-primary">Ver o Budget completo →</a>
       </div>
-      <div class="fade-in" style="transition-delay:0.2s;order:1;">
-        <div style="background:white;border-radius:20px;padding:32px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.06);">
-          <div style="font-size:40px;margin-bottom:16px;">📊</div>
-          <div style="font-size:18px;font-weight:600;color:var(--text);margin-bottom:20px;">Budget Mensal Suíça</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;">
-              <span style="color:var(--text-muted);">🏠 Habitação (renda + encargos)</span>
-              <span style="color:var(--text);font-weight:500;">CHF —</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;">
-              <span style="color:var(--text-muted);">🏥 Krankenkasse (seguro saúde)</span>
-              <span style="color:var(--text);font-weight:500;">CHF —</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;">
-              <span style="color:var(--text-muted);">🚆 Transportes (GA / abono)</span>
-              <span style="color:var(--text);font-weight:500;">CHF —</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;">
-              <span style="color:var(--text-muted);">🛒 Alimentação e supermercado</span>
-              <span style="color:var(--text);font-weight:500;">CHF —</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:13px;font-weight:600;">
-              <span style="color:var(--green);">💰 Poupança mensal</span>
-              <span style="color:var(--green);">CHF —</span>
-            </div>
+      <!-- Preview -->
+      <div class="fade-in tool-preview" style="transition-delay:0.2s;background:white;padding:32px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.06);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
+          <div>
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-hint);margin-bottom:4px;">Budget mensal</div>
+            <div style="font-size:18px;font-weight:600;color:var(--text);">Outubro</div>
           </div>
+          <div style="font-size:12px;color:var(--green);background:var(--green-light);padding:5px 12px;border-radius:20px;font-weight:600;">No bom caminho</div>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;">
+            <span style="color:var(--text-muted);">Habitação</span>
+            <span style="color:var(--text);font-weight:500;">CHF 1'850</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;">
+            <span style="color:var(--text-muted);">Seguros</span>
+            <span style="color:var(--text);font-weight:500;">CHF 420</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;">
+            <span style="color:var(--text-muted);">Transporte</span>
+            <span style="color:var(--text);font-weight:500;">CHF 340</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;">
+            <span style="color:var(--text-muted);">Dia a dia</span>
+            <span style="color:var(--text);font-weight:500;">CHF 680</span>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:16px;border-top:1.5px solid var(--green);">
+          <span style="color:var(--green-dark);font-weight:600;font-size:14px;">Poupança · Limpo</span>
+          <span style="color:var(--green);font-weight:700;font-size:17px;">CHF 540</span>
         </div>
       </div>
     </div>
