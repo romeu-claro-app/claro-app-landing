@@ -432,7 +432,34 @@
       .testimonial-form-wrap { padding: 28px 20px; }
       .features-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; gap: 32px; }
-      .pricing-grid { grid-template-columns: 1fr; }
+      /* Pricing: scroll horizontal compacto no mobile */
+      .pricing-grid {
+        display: flex;
+        grid-template-columns: none;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 20px;
+        -webkit-overflow-scrolling: touch;
+        align-items: stretch;
+        gap: 14px;
+        margin: 32px -20px 0;
+        padding: 4px 20px 10px;
+        scrollbar-width: none;          /* Firefox */
+        -ms-overflow-style: none;       /* IE/Edge */
+      }
+      .pricing-grid::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+      .pricing-card {
+        flex: 0 0 78%;
+        scroll-snap-align: start;
+        padding: 26px 22px;
+      }
+      .pricing-plan { font-size: 12px; margin-bottom: 12px; }
+      .pricing-price { font-size: 38px; }
+      .pricing-period { font-size: 13px; margin-bottom: 18px; }
+      .pricing-features { margin-bottom: 20px; }
+      .pricing-features li { font-size: 13px; padding: 5px 0; }
+      .pricing-btn { padding: 11px; font-size: 14px; }
+      .billing-toggle { margin-top: 28px; }
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
       .about-photo { aspect-ratio: 1; max-width: 280px; margin: 0 auto; }
       .section-grid { display: block !important; }
