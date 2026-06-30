@@ -7,7 +7,7 @@
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Claro-app.ch — Documentos suíços em português</title>
-  <meta name="description" content="A app que ajuda imigrantes portugueses na Suíça a entender documentos oficiais em alemão, francês e italiano.">
+  <meta name="description" content="A Claro-app explica os teus documentos suíços em português e diz-te o que fazer. Com manual, budget e apoio quando precisares. Para portugueses na Suíça.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -496,6 +496,40 @@
     /* ── FERRAMENTAS (Manual / Budget) — 2 colunas desktop ── */
     .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .tool-preview { border-radius: 20px; position: relative; overflow: hidden; }
+
+    /* ── FAQ ── */
+    .faq { padding: 100px 48px; background: var(--surface); }
+    .faq-inner { max-width: 760px; margin: 0 auto; }
+    .faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; transition: box-shadow 0.25s, border-color 0.25s;
+    }
+    .faq-item[open] { border-color: var(--green-mid); box-shadow: 0 12px 30px rgba(15,110,86,0.08); }
+    .faq-item summary {
+      list-style: none; cursor: pointer; padding: 22px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text);
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:hover { color: var(--green-dark); }
+    .faq-icon {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--green-light); color: var(--green-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 600; transition: transform 0.25s, background 0.25s;
+    }
+    .faq-item[open] .faq-icon { transform: rotate(45deg); background: var(--green); color: white; }
+    .faq-answer {
+      padding: 0 24px 24px; font-size: 15px; color: var(--text-muted);
+      line-height: 1.8; font-weight: 300;
+    }
+    @media (max-width: 768px) {
+      .faq { padding: 60px 20px !important; }
+      .faq-item summary { font-size: 16px; padding: 18px 20px; }
+      .faq-answer { padding: 0 20px 20px; font-size: 14px; }
+    }
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -598,7 +632,7 @@
       <div class="feature-card fade-in" style="transition-delay:0.1s">
         <div class="feature-icon">📄</div>
         <div class="feature-title">Percebe qualquer documento</div>
-        <div class="feature-desc">Fotografa ou carrega qualquer documento oficial em alemão, francês ou italiano. Em segundos tens um resumo claro, em português, com o que tens de fazer e quando.</div>
+        <div class="feature-desc">Fotografa ou carrega qualquer documento administrativo em alemão, francês ou italiano. Em segundos tens um resumo claro, em português, com o que tens de fazer e quando.</div>
       </div>
       <div class="feature-card fade-in" style="transition-delay:0.2s">
         <div class="feature-icon">🧭</div>
@@ -660,14 +694,14 @@
         <button id="toggleGood" onclick="showCompare('good')" style="flex:1;padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;border:none;font-family:inherit;background:transparent;color:#A8A69F;">✅ Com Claro-app</button>
       </div>
       <div id="compareBad" style="display:flex;flex-direction:column;gap:10px;">
-        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Carta oficial</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Recebes uma carta em alemão e não percebes nada.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Perdes prazos e pagas multas.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Carta administrativa</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Recebes uma carta em alemão e não percebes nada.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Perdes prazos e pagas multas.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Conselho</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">O teu "conselheiro" só quer vender o que lhe convém.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sem conhecer as tuas necessidades reais.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Finanças</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Não sabes para onde vai o dinheiro.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">A Suíça é cara e surpreende quem não está preparado.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Problemas</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Cada problema parece intransponível.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sentes-te perdido e sozinho.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #E24B4A;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#791F1F;margin-bottom:6px;">Impostos</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Declaração em alemão — pagas mais do que devias.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Ou cometes erros sem saber.</div></div>
       </div>
       <div id="compareGood" style="display:none;flex-direction:column;gap:10px;">
-        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Carta oficial</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Fotografas o documento e tens a explicação em segundos.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sabes exatamente o que fazer e quando.</div></div>
+        <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Carta administrativa</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Fotografas o documento e tens a explicação em segundos.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sabes exatamente o que fazer e quando.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Conselho</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Marcas consultas com alguém que te conhece.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Sem agenda escondida, sempre em português.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Finanças</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Budget Mensal feito para a realidade suíça.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Controlas cada franco e planeas o futuro.</div></div>
         <div style="background:white;border-radius:14px;padding:16px 18px;border:1px solid #E8E6DF;border-left:3px solid #1D9E75;"><div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#0F6E56;margin-bottom:6px;">Problemas</div><div style="font-size:14px;color:#1A1A18;font-weight:500;line-height:1.6;">Tens um guia completo sempre no bolso.</div><div style="font-size:13px;color:#5A5955;line-height:1.6;margin-top:4px;">Nunca mais te sentes sozinho.</div></div>
@@ -905,7 +939,7 @@
 <!-- CONSULTOR -->
 <section style="padding:100px 48px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div class="section-grid">
+    <div class="tool-grid">
       <div class="fade-in">
         <div class="section-label">Incluído no Claro Total</div>
         <h2 class="section-title" style="font-size:clamp(24px,3.5vw,38px);">Quando a carta é importante de mais para arriscar</h2>
@@ -1177,6 +1211,42 @@
     </div>
     <div class="testimonial-success" id="testimonialSuccess">
       ✅ Obrigado! O teu testemunho foi publicado.
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-label">Perguntas frequentes</div>
+      <h2 class="section-title">As dúvidas mais comuns,<br>respondidas com clareza</h2>
+    </div>
+    <div class="faq-list fade-in">
+      <details class="faq-item">
+        <summary>Os meus documentos ficam guardados?<span class="faq-icon">+</span></summary>
+        <div class="faq-answer">Não. A imagem que envias é analisada e descartada — não fica guardada nos nossos servidores. Só guardamos o resultado da análise (o resumo e os prazos) no teu histórico pessoal, para o poderes consultar mais tarde. A imagem original do teu documento nunca é armazenada.</div>
+      </details>
+      <details class="faq-item">
+        <summary>É seguro enviar documentos pessoais?<span class="faq-icon">+</span></summary>
+        <div class="faq-answer">Sim. A imagem é enviada de forma segura apenas para ser analisada e não é guardada do nosso lado. A análise é processada com a ajuda de um parceiro de inteligência artificial (Anthropic), que trata o conteúdo de acordo com padrões de segurança. Não vendemos nem partilhamos os teus dados com terceiros para publicidade.</div>
+      </details>
+      <details class="faq-item">
+        <summary>A análise é fiável?<span class="faq-icon">+</span></summary>
+        <div class="faq-answer">A Claro-app usa inteligência artificial avançada para explicar os teus documentos em português e indicar prazos e próximos passos. É uma ferramenta de apoio, muito útil para perceberes o que tens em mãos — mas para decisões importantes ou situações específicas, deves sempre confirmar com um profissional.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Preciso de saber alemão, francês ou italiano?<span class="faq-icon">+</span></summary>
+        <div class="faq-answer">Não. É precisamente para isso que a Claro-app existe. Recebes os teus documentos em qualquer das línguas oficiais suíças e a app explica-te tudo em português.</div>
+      </details>
+      <details class="faq-item">
+        <summary>O que está incluído em cada plano?<span class="faq-icon">+</span></summary>
+        <div class="faq-answer">O plano Claro (grátis) dá-te 3 análises por mês. O Claro+ dá análises ilimitadas, o Manual do Emigrante e a ferramenta de Budget. O Claro Total inclui tudo isso mais uma consulta por mês com um profissional e a gestão do agregado familiar.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Os meus dados são vendidos ou partilhados?<span class="faq-icon">+</span></summary>
+        <div class="faq-answer">Não. Os teus dados são teus. Não vendemos nem partilhamos a tua informação com terceiros para fins publicitários.</div>
+      </details>
     </div>
   </div>
 </section>
